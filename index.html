@@ -25,7 +25,13 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .nav-item.active{background:#f3f4f6;color:var(--text);font-weight:500}
 .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .dm{background:var(--mathe)}.dd{background:var(--deutsch)}.de{background:var(--englisch)}
-.dlz{background:var(--amber)}.dv{background:var(--pink)}.du{background:var(--accent2)}.dplan{background:var(--green)}
+.dlz{background:var(--amber)}.dv{background:var(--pink)}.du{background:var(--accent2)}.dplan{background:var(--green)}.da{background:var(--accent)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.msg{max-width:85%;padding:0.6rem 0.9rem;border-radius:10px;font-size:13px;line-height:1.6}
+.msg.ai{background:#f3f4f6;color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.user{background:var(--accent);color:white;align-self:flex-end;border-bottom-right-radius:3px}
+.qp-btn{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:none;cursor:pointer;color:var(--muted);font-family:inherit}
+.qp-btn:hover{border-color:var(--accent);color:var(--accent)}
 .content{flex:1;overflow-y:auto;padding:1.4rem;max-width:900px}
 .page{display:none}.page.active{display:block}
 .page-title{font-size:1.05rem;font-weight:600;margin-bottom:1.1rem;display:flex;align-items:center;gap:8px;color:var(--text)}
@@ -185,7 +191,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   </div>
   <div class="sidebar-group">
     <div class="sidebar-group-label">Allgemein</div>
-    <button class="nav-item active" onclick="nav('lernplan',this)"><span class="dot dplan"></span>Lernplan</button>
+    <button class="nav-item active" onclick="nav('ki-tutor',this)"><span class="dot da"></span>KI-Tutor</button>
+    <button class="nav-item" onclick="nav('lernplan',this)"><span class="dot dplan"></span>Lernplan</button>
     <button class="nav-item" onclick="nav('uebungen',this)"><span class="dot du"></span>Übungsaufgaben</button>
     <button class="nav-item" onclick="nav('lernzettel',this)"><span class="dot dlz"></span>Lernzettel</button>
   </div>
@@ -212,6 +219,42 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 </div>
 
 <div class="content">
+
+<!-- KI-TUTOR -->
+<div class="page active" id="page-ki-tutor">
+  <div class="page-title"><span class="accent-bar" style="background:var(--accent)"></span>KI-Tutor</div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+    <div style="background:var(--text);color:white;padding:0.75rem 1rem;display:flex;align-items:center;gap:8px">
+      <div style="width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;flex-shrink:0"></div>
+      <div>
+        <div style="font-size:13px;font-weight:500">ZP10-Assistent (Gemini)</div>
+        <div style="font-size:10px;opacity:0.6">Mathe · Deutsch · Englisch – Klasse 10 NRW</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px;padding:0.6rem 0.8rem;border-bottom:1px solid var(--border)">
+      <button class="qp-btn" onclick="qask('Erkläre die pq-Formel mit einem Beispiel')">pq-Formel</button>
+      <button class="qp-btn" onclick="qask('Wie schreibe ich eine Erörterung auf Deutsch?')">Erörterung</button>
+      <button class="qp-btn" onclick="qask('Erkläre Simple Past vs Present Perfect auf Englisch')">Zeitformen EN</button>
+      <button class="qp-btn" onclick="qask('Was sind die ZP10 Themen in Mathe NRW?')">ZP10 Themen</button>
+      <button class="qp-btn" onclick="qask('Erstelle eine typische ZP10-Matheaufgabe für mich')">Aufgabe generieren</button>
+    </div>
+    <div id="chatarea" style="height:320px;overflow-y:auto;padding:0.85rem;display:flex;flex-direction:column;gap:8px">
+      <div class="msg ai">Hallo! Ich bin dein ZP10-Tutor. Stell mir Fragen zu Mathe, Deutsch oder Englisch auf Klasse-10-Niveau NRW!</div>
+    </div>
+    <div style="display:flex;gap:6px;padding:0.6rem 0.8rem;border-top:1px solid var(--border)">
+      <select id="fsel" style="padding:0 8px;border:1px solid var(--border);border-radius:7px;background:#f9fafb;font-family:inherit;font-size:12px;color:var(--text);cursor:pointer;height:32px">
+        <option value="Mathe">Mathe</option>
+        <option value="Deutsch">Deutsch</option>
+        <option value="Englisch">Englisch</option>
+        <option value="Allgemein">Allgemein</option>
+      </select>
+      <input id="cinput" type="text" placeholder="Deine Frage..." onkeydown="if(event.key==='Enter')send()"
+        style="flex:1;padding:0 10px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;background:#f9fafb;color:var(--text);outline:none;height:32px">
+      <button id="sbtn" onclick="send()"
+        style="background:var(--accent);color:white;border:none;border-radius:7px;padding:0 14px;cursor:pointer;font-size:14px;height:32px">→</button>
+    </div>
+  </div>
+</div>
 
 <!-- LERNPLAN -->
 <div class="page active" id="page-lernplan">
@@ -829,6 +872,53 @@ function revealAll() { document.querySelectorAll('.vok-card').forEach(function(c
 function clearVok() {
   if (!confirm('Alle Vokabeln löschen?')) return;
   saveVokStore([]); renderVok();
+}
+
+// KI-TUTOR mit Gemini
+var chatHistory = [];
+
+function addMsg(text, type) {
+  var a = document.getElementById('chatarea');
+  var id = 'm' + Date.now() + Math.random();
+  var d = document.createElement('div');
+  d.className = 'msg ' + type;
+  d.id = id;
+  d.textContent = text;
+  a.appendChild(d);
+  a.scrollTop = a.scrollHeight;
+  return id;
+}
+
+async function send() {
+  var inp = document.getElementById('cinput');
+  var btn = document.getElementById('sbtn');
+  var fach = document.getElementById('fsel').value;
+  var text = inp.value.trim();
+  if (!text) return;
+  addMsg(text, 'user');
+  inp.value = '';
+  btn.disabled = true;
+  var lid = addMsg('...', 'ai');
+  try {
+    var r = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, fach: fach, history: chatHistory })
+    });
+    var d = await r.json();
+    var reply = d.text || 'Fehler beim Laden.';
+    chatHistory.push({ role: 'user', text: '[' + fach + '] ' + text });
+    chatHistory.push({ role: 'model', text: reply });
+    document.getElementById(lid).textContent = reply;
+  } catch (e) {
+    document.getElementById(lid).textContent = 'Verbindungsfehler! Ist api/chat.js auf GitHub?';
+  }
+  btn.disabled = false;
+}
+
+function qask(text) {
+  document.getElementById('cinput').value = text;
+  send();
 }
 
 function esc(s) {
