@@ -4,45 +4,139 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZP10 NRW – Lernplattform</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --mathe:#dc2626;--deutsch:#7c3aed;--englisch:#059669;
-  --accent:#2563eb;--accent2:#6366f1;--pink:#ec4899;--amber:#f59e0b;--green:#10b981;
-  --bg:#f8f7f4;--card:#ffffff;--text:#1a1a2e;--muted:#6b7280;
-  --border:rgba(0,0,0,0.09);--radius:12px;
+  --accent:#2563eb;--green:#10b981;--amber:#f59e0b;--pink:#ec4899;
+  --bg:#f0f2f5;--card:#ffffff;--text:#0f172a;--muted:#64748b;
+  --border:rgba(0,0,0,0.08);--radius:16px;
 }
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;font-size:14px}
-.sidebar{width:220px;background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
-.sidebar-logo{padding:1rem 1rem 0.8rem;border-bottom:1px solid var(--border)}
-.logo-text{font-weight:700;font-size:1rem;letter-spacing:-0.01em;color:var(--text)}
-.logo-sub{font-size:10px;color:var(--muted);margin-top:2px}
-.sidebar-group{padding:0.5rem 0.5rem 0.2rem}
-.sidebar-group-label{font-size:10px;font-weight:500;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;padding:0 0.5rem;margin-bottom:3px}
-.nav-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--muted);transition:all 0.15s;border:none;background:none;width:100%;text-align:left;font-family:'DM Sans',system-ui,sans-serif}
-.nav-item:hover{background:#f3f4f6;color:var(--text)}
-.nav-item.active{background:#f3f4f6;color:var(--text);font-weight:500}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dm{background:var(--mathe)}.dd{background:var(--deutsch)}.de{background:var(--englisch)}
-.dlz{background:var(--amber)}.dv{background:var(--pink)}.du{background:var(--accent2)}.dplan{background:var(--green)}.da{background:var(--accent)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.msg{max-width:85%;padding:0.6rem 0.9rem;border-radius:10px;font-size:13px;line-height:1.6}
-.msg.ai{background:#f3f4f6;color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
-.msg.user{background:var(--accent);color:white;align-self:flex-end;border-bottom-right-radius:3px}
-.qp-btn{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:none;cursor:pointer;color:var(--muted);font-family:inherit}
-.qp-btn:hover{border-color:var(--accent);color:var(--accent)}
-.content{flex:1;overflow-y:auto;padding:1.4rem;max-width:900px}
-.page{display:none}.page.active{display:block}
-.page-title{font-size:1.05rem;font-weight:600;margin-bottom:1.1rem;display:flex;align-items:center;gap:8px;color:var(--text)}
-.accent-bar{width:4px;height:1rem;border-radius:2px;flex-shrink:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
 
-/* FORMELN */
+/* ── TOP NAV ── */
+.topnav{background:white;border-bottom:1px solid var(--border);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.nav-logo{font-family:'Oswald',sans-serif;font-weight:800;font-size:1.1rem;color:var(--text);display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-logo span{background:var(--accent);color:white;font-size:11px;padding:2px 8px;border-radius:20px;font-family:'Inter',sans-serif;font-weight:600}
+.nav-links{display:flex;gap:4px}
+.nav-link{background:none;border:none;padding:6px 12px;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;color:var(--muted);cursor:pointer;transition:all 0.15s;font-weight:500}
+.nav-link:hover{background:#f1f5f9;color:var(--text)}
+.nav-link.active{background:#eff6ff;color:var(--accent)}
+
+/* ── LAYOUT ── */
+.app{display:flex;min-height:calc(100vh - 56px)}
+.sidebar{width:240px;display:none;background:white;border-right:1px solid var(--border);flex-shrink:0;padding:1rem 0.75rem;overflow-y:auto;height:calc(100vh - 56px);position:sticky;top:56px}
+.sidebar-section{margin-bottom:1.2rem}
+.sidebar-label{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;padding:0 8px;margin-bottom:4px}
+.side-btn{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:10px;cursor:pointer;font-size:13px;color:var(--muted);border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif;font-weight:500;transition:all 0.15s}
+.side-btn:hover{background:#f8fafc;color:var(--text)}
+.side-btn.active{color:var(--text);font-weight:600}
+.side-btn.active.m{background:#fef2f2;color:var(--mathe)}
+.side-btn.active.d{background:#f5f3ff;color:var(--deutsch)}
+.side-btn.active.e{background:#f0fdf4;color:var(--englisch)}
+.side-btn.active.g{background:#eff6ff;color:var(--accent)}
+.side-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dm{background:var(--mathe)}.dd{background:var(--deutsch)}.de{background:var(--englisch)}
+.da{background:var(--accent)}.dg{background:var(--green)}.dam{background:var(--amber)}.dpk{background:var(--pink)}
+
+.content{flex:1;overflow-y:auto;padding:1.5rem;max-width:900px}
+.page{display:none}.page.active{display:block}
+
+/* ── STARTSEITE ── */
+.hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 60%,#2563eb 100%);border-radius:20px;padding:2rem 2rem 1.8rem;color:white;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,0.04);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-60px;right:60px;width:150px;height:150px;background:rgba(255,255,255,0.04);border-radius:50%}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;opacity:0.7;margin-bottom:8px}
+.hero-title{font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-0.01em;line-height:1.1;margin-bottom:10px}
+.hero-title span{color:#60a5fa}
+.hero-sub{font-size:14px;opacity:0.75;line-height:1.6;max-width:480px;margin-bottom:1.2rem}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap}
+.hero-chip{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500}
+
+.fach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1.5rem}
+.fach-card{background:white;border-radius:var(--radius);padding:1.3rem;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--border);position:relative;overflow:hidden}
+.fach-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.1)}
+.fach-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--radius) var(--radius) 0 0}
+.fach-card.mc::before{background:var(--mathe)}
+.fach-card.dc::before{background:var(--deutsch)}
+.fach-card.ec::before{background:var(--englisch)}
+.fach-emoji{font-size:2rem;margin-bottom:10px}
+.fach-name{font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem;margin-bottom:4px}
+.fach-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.fach-tags{display:flex;flex-wrap:wrap;gap:4px}
+.fach-tag{font-size:10px;padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--muted);font-weight:500}
+.fach-btn{margin-top:12px;width:100%;padding:8px;border-radius:8px;border:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s}
+.fach-btn.mb{background:#fef2f2;color:var(--mathe)}.fach-btn.mb:hover{background:var(--mathe);color:white}
+.fach-btn.db{background:#f5f3ff;color:var(--deutsch)}.fach-btn.db:hover{background:var(--deutsch);color:white}
+.fach-btn.eb{background:#f0fdf4;color:var(--englisch)}.fach-btn.eb:hover{background:var(--englisch);color:white}
+
+.tools-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:1.5rem}
+.tool-card{background:white;border-radius:var(--radius);padding:1rem 1.1rem;cursor:pointer;transition:all 0.2s;border:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.tool-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.08);transform:translateY(-1px)}
+.tool-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.tool-info{flex:1;min-width:0}
+.tool-name{font-weight:600;font-size:13px;color:var(--text);margin-bottom:2px}
+.tool-desc{font-size:11px;color:var(--muted)}
+.tool-arrow{color:var(--muted);font-size:16px}
+
+/* ── FACH ÜBERSICHTSSEITEN ── */
+.fach-hero{border-radius:16px;padding:1.4rem;margin-bottom:1.2rem;color:white}
+.fach-hero.mh{background:linear-gradient(135deg,#7f1d1d,var(--mathe))}
+.fach-hero.dh{background:linear-gradient(135deg,#4c1d95,var(--deutsch))}
+.fach-hero.eh{background:linear-gradient(135deg,#064e3b,var(--englisch))}
+.fach-hero-title{font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:4px}
+.fach-hero-sub{font-size:12px;opacity:0.8;margin-bottom:12px}
+.fach-subtopic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:1.2rem}
+.subtopic-card{background:white;border-radius:10px;padding:0.9rem;cursor:pointer;transition:all 0.15s;border:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.subtopic-card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.subtopic-emoji{font-size:1.4rem}
+.subtopic-name{font-weight:600;font-size:13px;color:var(--text)}
+.subtopic-count{font-size:11px;color:var(--muted);margin-top:1px}
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-family:'Inter',sans-serif;font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:1rem;transition:all 0.15s}
+.back-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── KI TUTOR ── */
+.ki-hero{background:linear-gradient(135deg,#0f172a,#1e3a8a);border-radius:16px;padding:1.3rem 1.5rem;margin-bottom:1.2rem;color:white;display:flex;align-items:center;justify-content:space-between}
+.ki-hero-left .ki-title{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:800;margin-bottom:3px}
+.ki-hero-left .ki-sub{font-size:12px;opacity:0.7}
+.ki-status{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:20px;font-size:12px}
+.ki-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.chat-wrap{background:white;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.quick-row{display:flex;flex-wrap:wrap;gap:6px;padding:0.7rem 0.9rem;border-bottom:1px solid var(--border);background:#fafafa}
+.qp{font-size:11px;padding:4px 11px;border-radius:20px;border:1px solid var(--border);background:white;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;font-weight:500;transition:all 0.15s}
+.qp:hover{border-color:var(--accent);color:var(--accent);background:#eff6ff}
+.chat-area{height:360px;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:86%;padding:0.75rem 1rem;border-radius:12px;font-size:13.5px;line-height:1.75}
+.msg.ai{background:#f8fafc;color:var(--text);align-self:flex-start;border-bottom-left-radius:3px;border:1px solid var(--border)}
+.msg.ai p{margin-bottom:6px}.msg.ai p:last-child{margin-bottom:0}
+.msg.ai strong{font-weight:600;color:var(--text)}
+.msg.ai code{background:#e2e8f0;padding:1px 5px;border-radius:4px;font-family:monospace;font-size:12px}
+.msg.ai ul,.msg.ai ol{margin:4px 0 6px 16px}
+.msg.ai li{margin-bottom:3px}
+.msg.user{background:var(--accent);color:white;align-self:flex-end;border-bottom-right-radius:3px}
+.chat-input-row{display:flex;gap:8px;padding:0.75rem 0.9rem;border-top:1px solid var(--border);background:#fafafa}
+.fsel{padding:0 10px;border:1px solid var(--border);border-radius:9px;background:white;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);cursor:pointer;height:36px;font-weight:500}
+.cinp{flex:1;padding:0 12px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;background:white;color:var(--text);outline:none;height:36px;transition:border-color 0.15s}
+.cinp:focus{border-color:var(--accent)}
+.sbtn{background:var(--accent);color:white;border:none;border-radius:9px;padding:0 16px;cursor:pointer;font-size:15px;height:36px;transition:background 0.15s}
+.sbtn:hover{background:#1d4ed8}.sbtn:disabled{opacity:0.5;cursor:not-allowed}
+
+/* ── FORMELN ── */
 .formula-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:1rem}
-.formula-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;border-left:3px solid var(--mathe)}
-.formula-name{font-size:10px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px}
+.formula-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;border-left:3px solid var(--mathe)}
+.formula-name{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px}
 .formula-desc{font-size:11px;color:var(--muted);line-height:1.6;margin-top:8px}
-.fbox{background:#f9fafb;border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin:4px 0;text-align:center}
+.fbox{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin:4px 0;text-align:center}
 .fraction{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.2}
 .fraction .num{border-bottom:1.5px solid var(--text);padding:0 4px;font-size:14px}
 .fraction .den{padding:0 4px;font-size:14px}
@@ -55,285 +149,409 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .formula-list{list-style:none;padding:0;margin:4px 0}
 .formula-list li{padding:4px 0;font-size:13px;font-family:Georgia,serif;color:var(--text);border-bottom:0.5px solid var(--border);display:flex;align-items:baseline;gap:8px}
 .formula-list li:last-child{border-bottom:none}
-.formula-list .fl-name{font-size:11px;font-family:'DM Sans',system-ui,sans-serif;color:var(--muted);min-width:80px;flex-shrink:0}
+.formula-list .fl-name{font-size:11px;font-family:'Inter',system-ui,sans-serif;color:var(--muted);min-width:80px;flex-shrink:0}
 
-/* GRAMMAR */
-.grammar-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;margin-bottom:10px}
-.grammar-title{font-size:13px;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.gtag{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:400}
+/* ── GRAMMAR ── */
+.grammar-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;margin-bottom:10px}
+.grammar-title{font-size:13px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.gtag{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500}
 .tag-de{background:#ede9fe;color:#5b21b6}.tag-en{background:#d1fae5;color:#065f46}
-.grammar-example{font-size:12px;background:#f9fafb;border-radius:6px;padding:7px 10px;margin-top:7px;font-family:Georgia,serif;color:var(--muted);line-height:1.7;border-left:2px solid var(--border)}
+.grammar-example{font-size:12px;background:#f8fafc;border-radius:6px;padding:7px 10px;margin-top:7px;font-family:Georgia,serif;color:var(--muted);line-height:1.7;border-left:2px solid var(--border)}
 .grammar-rule{font-size:12px;color:var(--muted);line-height:1.8}
-.grammar-rule b{color:var(--text);font-weight:500}
+.grammar-rule b{color:var(--text);font-weight:600}
 
-/* ÜBUNGEN */
+/* ── ÜBUNGEN ── */
 .ueb-controls{display:flex;gap:8px;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
-.usel{padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:var(--card);font-family:'DM Sans',system-ui,sans-serif;font-size:13px;color:var(--text);cursor:pointer}
+.usel{padding:6px 10px;border:1px solid var(--border);border-radius:9px;background:white;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);cursor:pointer;font-weight:500}
 .ueb-meta{font-size:11px;color:var(--muted)}
-.nav-aufg-btn{background:var(--accent);color:white;border:none;border-radius:7px;padding:6px 14px;font-family:'DM Sans',system-ui,sans-serif;font-size:12px;cursor:pointer}
+.nav-aufg-btn{background:var(--accent);color:white;border:none;border-radius:9px;padding:7px 16px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;font-weight:600}
 .nav-aufg-btn:hover{background:#1d4ed8}
-.aufg-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;margin-bottom:1rem}
-.aufg-label{font-size:10px;font-weight:500;color:var(--accent2);margin-bottom:8px;letter-spacing:0.05em;text-transform:uppercase}
+.aufg-box{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;margin-bottom:1rem}
+.aufg-label{font-size:10px;font-weight:600;color:var(--accent);margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase}
 .aufg-text{font-size:14px;line-height:1.8;color:var(--text);white-space:pre-wrap}
-.show-loesung-btn{margin-top:1rem;background:none;border:1px solid var(--border);border-radius:7px;padding:5px 14px;font-size:12px;cursor:pointer;color:var(--muted);font-family:'DM Sans',system-ui,sans-serif}
+.show-loesung-btn{margin-top:1rem;background:none;border:1px solid var(--border);border-radius:9px;padding:6px 16px;font-size:12px;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;font-weight:500;transition:all 0.15s}
 .show-loesung-btn:hover{border-color:var(--green);color:var(--green)}
 .loesung-box{margin-top:8px;padding:10px 14px;background:#f0fdf4;border-left:3px solid var(--green);border-radius:0 8px 8px 0;font-size:13px;color:#065f46;line-height:1.7;display:none;white-space:pre-wrap}
 .loesung-box.open{display:block}
 
-/* LERNZETTEL */
+/* ── LERNZETTEL ── */
 .lz-list-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:1rem}
-.lz-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;display:flex;align-items:center;gap:10px}
+.lz-item{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;display:flex;align-items:center;gap:10px}
 .lz-icon{font-size:1.4rem;flex-shrink:0}
 .lz-info{flex:1;min-width:0}
-.lz-title-text{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lz-title-text{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lz-meta{font-size:11px;color:var(--muted);margin-top:2px}
-.lz-del{background:none;border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:11px;cursor:pointer;color:var(--muted);font-family:'DM Sans',system-ui,sans-serif}
+.lz-del{background:none;border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:11px;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;transition:all 0.15s;flex-shrink:0}
 .lz-del:hover{border-color:#dc2626;color:#dc2626}
-.lz-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;flex-shrink:0}
+.lz-badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;flex-shrink:0}
 .lz-badge.mathe{background:#fef2f2;color:#991b1b}
 .lz-badge.deutsch{background:#f5f3ff;color:#5b21b6}
 .lz-badge.englisch{background:#f0fdf4;color:#14532d}
 .lz-badge.sonstiges{background:#f3f4f6;color:#374151}
-.upload-area{background:var(--card);border:2px dashed var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}
+.upload-area{background:white;border:2px dashed var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;transition:all 0.2s}
+.upload-area:hover{border-color:var(--accent)}
 .upload-area p{font-size:13px;color:var(--muted);margin-bottom:0.8rem}
-.btn-primary{background:var(--accent);color:white;border:none;border-radius:8px;padding:7px 18px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;cursor:pointer}
+.btn-primary{background:var(--accent);color:white;border:none;border-radius:9px;padding:8px 20px;font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;font-weight:600}
 .btn-primary:hover{background:#1d4ed8}
-.lz-form{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-top:1rem;display:none}
+.lz-form{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-top:1rem;display:none}
 .lz-form.open{display:block}
 .form-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.form-inp{flex:1;min-width:120px;padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;color:var(--text);background:#f9fafb;outline:none}
+.form-inp{flex:1;min-width:120px;padding:8px 10px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:#f8fafc;outline:none}
 .form-inp:focus{border-color:var(--accent)}
-.form-sel{padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;color:var(--text);background:#f9fafb;cursor:pointer}
-.form-ta{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-family:'DM Sans',system-ui,sans-serif;font-size:12px;color:var(--text);background:#f9fafb;outline:none;resize:vertical;min-height:80px;margin-bottom:8px}
+.form-sel{padding:8px 10px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:#f8fafc;cursor:pointer}
+.form-ta{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text);background:#f8fafc;outline:none;resize:vertical;min-height:80px;margin-bottom:8px}
 
-/* VOKABELN */
+/* ── VOKABELN ── */
 .vok-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:1rem}
-.vok-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;cursor:pointer}
+.vok-card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;cursor:pointer;transition:all 0.15s}
 .vok-card:hover{border-color:var(--englisch)}
-.vok-de{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px}
+.vok-de{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
 .vok-en{font-size:13px;color:var(--muted);display:none}
 .vok-card.revealed .vok-en{display:block;color:var(--englisch)}
 .vok-card.revealed .vok-de{color:var(--muted);font-weight:400}
-.vok-status{font-size:10px;margin-top:5px}
+.vok-status{font-size:10px;margin-top:5px;font-weight:500}
 .vok-status.gut{color:var(--englisch)}.vok-status.falsch{color:var(--mathe)}.vok-status.neu{color:var(--muted)}
-.vok-add-form{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:1rem}
-.vok-add-title{font-size:12px;font-weight:500;color:var(--muted);margin-bottom:0.6rem;text-transform:uppercase;letter-spacing:0.05em}
+.vok-add-form{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:1rem}
+.vok-add-title{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:0.6rem;text-transform:uppercase;letter-spacing:0.06em}
 .vok-row{display:flex;gap:6px;flex-wrap:wrap}
-.vok-inp{flex:1;min-width:100px;padding:6px 10px;border:1px solid var(--border);border-radius:7px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;color:var(--text);background:#f9fafb;outline:none}
+.vok-inp{flex:1;min-width:100px;padding:7px 10px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:#f8fafc;outline:none}
 .vok-inp:focus{border-color:var(--englisch)}
-.vok-add-btn{background:var(--englisch);color:white;border:none;border-radius:7px;padding:6px 14px;font-family:'DM Sans',system-ui,sans-serif;font-size:12px;cursor:pointer}
+.vok-add-btn{background:var(--englisch);color:white;border:none;border-radius:9px;padding:7px 16px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;font-weight:600}
 .vok-stats{display:flex;gap:10px;margin-bottom:1rem;flex-wrap:wrap}
-.vok-stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:0.5rem 0.9rem;font-size:12px;color:var(--muted)}
-.vok-stat span{font-weight:500;color:var(--text)}
+.vok-stat{background:white;border:1px solid var(--border);border-radius:9px;padding:0.5rem 0.9rem;font-size:12px;color:var(--muted);font-weight:500}
+.vok-stat span{font-weight:700;color:var(--text)}
 .vok-ctrl{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
-.ctrl-btn{padding:5px 12px;border:1px solid var(--border);border-radius:7px;font-family:'DM Sans',system-ui,sans-serif;font-size:12px;cursor:pointer;color:var(--muted);background:var(--card)}
+.ctrl-btn{padding:5px 12px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;color:var(--muted);background:white;font-weight:500;transition:all 0.15s}
 .ctrl-btn:hover{border-color:var(--accent);color:var(--accent)}
 .ctrl-btn.active{background:var(--englisch);color:white;border-color:var(--englisch)}
-.empty-hint{font-size:13px;color:var(--muted);text-align:center;padding:2rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius)}
+.empty-hint{font-size:13px;color:var(--muted);text-align:center;padding:2.5rem;background:white;border:1px solid var(--border);border-radius:var(--radius)}
 
-/* LERNPLAN */
-.plan-header{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
-.plan-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;text-align:center}
-.plan-stat-num{font-size:1.6rem;font-weight:700;color:var(--accent)}
-.plan-stat-label{font-size:11px;color:var(--muted);margin-top:2px}
-.progress-bar-wrap{background:#f3f4f6;border-radius:20px;height:6px;margin:0 0 1rem;overflow:hidden}
+/* ── LERNPLAN ── */
+.plan-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.plan-stat{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;text-align:center}
+.plan-stat-num{font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent)}
+.plan-stat-label{font-size:11px;color:var(--muted);margin-top:2px;font-weight:500}
+.progress-wrap{background:#e2e8f0;border-radius:20px;height:6px;margin:0 0 1rem;overflow:hidden}
 .progress-bar{height:100%;background:var(--green);border-radius:20px;transition:width 0.4s}
-.plan-add{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:1rem}
-.plan-add-title{font-size:12px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.7rem}
+.plan-add{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:1rem}
+.plan-add-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.7rem}
 .plan-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.plan-inp{flex:1;min-width:140px;padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;color:var(--text);background:#f9fafb;outline:none}
+.plan-inp{flex:1;min-width:140px;padding:8px 10px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:#f8fafc;outline:none}
 .plan-inp:focus{border-color:var(--green)}
-.plan-sel{padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;color:var(--text);background:#f9fafb;cursor:pointer}
-.plan-add-btn{background:var(--green);color:white;border:none;border-radius:7px;padding:7px 16px;font-family:'DM Sans',system-ui,sans-serif;font-size:13px;cursor:pointer}
-.plan-add-btn:hover{background:#059669}
-.file-upload-area{border:2px dashed var(--border);border-radius:8px;padding:0.8rem 1rem;text-align:center;cursor:pointer;background:#f9fafb;margin-bottom:8px}
+.plan-sel{padding:8px 10px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:#f8fafc;cursor:pointer}
+.plan-add-btn{background:var(--green);color:white;border:none;border-radius:9px;padding:8px 18px;font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;font-weight:600}
+.file-upload-area{border:2px dashed var(--border);border-radius:9px;padding:0.8rem 1rem;text-align:center;cursor:pointer;background:#f8fafc;margin-bottom:8px;transition:all 0.15s}
 .file-upload-area:hover{border-color:var(--green)}
 .file-upload-area p{font-size:12px;color:var(--muted);margin-bottom:2px}
 .attached-files{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-.file-chip{background:#f3f4f6;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.file-chip{background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
 .plan-filter{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
-.pf-btn{padding:4px 12px;border:1px solid var(--border);border-radius:20px;font-family:'DM Sans',system-ui,sans-serif;font-size:12px;cursor:pointer;color:var(--muted);background:var(--card)}
+.pf-btn{padding:4px 12px;border:1px solid var(--border);border-radius:20px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;color:var(--muted);background:white;font-weight:500;transition:all 0.15s}
 .pf-btn:hover{border-color:var(--green);color:var(--green)}
 .pf-btn.active{background:var(--green);color:white;border-color:var(--green)}
 .plan-list{display:flex;flex-direction:column;gap:8px}
-.plan-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.85rem;display:flex;align-items:flex-start;gap:10px}
+.plan-item{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem;display:flex;align-items:flex-start;gap:10px;transition:all 0.2s}
 .plan-item.done{opacity:0.5}
 .plan-item.done .plan-task{text-decoration:line-through;color:var(--muted)}
-.plan-check{width:20px;height:20px;border:2px solid var(--border);border-radius:50%;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:1px}
+.plan-check{width:20px;height:20px;border:2px solid var(--border);border-radius:50%;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:1px;transition:all 0.15s}
 .plan-check:hover{border-color:var(--green)}
 .plan-item.done .plan-check{background:var(--green);border-color:var(--green);color:white}
 .plan-info{flex:1;min-width:0}
-.plan-task{font-size:13px;color:var(--text);font-weight:500}
+.plan-task{font-size:13px;color:var(--text);font-weight:600}
 .plan-details{font-size:11px;color:var(--muted);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.plan-fach-badge{font-size:10px;padding:1px 7px;border-radius:20px;font-weight:500}
+.plan-fach-badge{font-size:10px;padding:1px 7px;border-radius:20px;font-weight:600}
 .plan-fach-badge.mathe{background:#fef2f2;color:#991b1b}
 .plan-fach-badge.deutsch{background:#f5f3ff;color:#5b21b6}
 .plan-fach-badge.englisch{background:#f0fdf4;color:#14532d}
 .plan-fach-badge.sonstiges{background:#f3f4f6;color:#374151}
-.prio-badge{font-size:10px;padding:1px 7px;border-radius:20px}
+.prio-badge{font-size:10px;padding:1px 7px;border-radius:20px;font-weight:500}
 .prio-badge.hoch{background:#fef2f2;color:#991b1b}
 .prio-badge.mittel{background:#fefce8;color:#92400e}
 .prio-badge.niedrig{background:#f0fdf4;color:#14532d}
-.plan-del{background:none;border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:11px;cursor:pointer;color:var(--muted);font-family:'DM Sans',system-ui,sans-serif;flex-shrink:0}
+.plan-del{background:none;border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:11px;cursor:pointer;color:var(--muted);font-family:'Inter',sans-serif;flex-shrink:0;transition:all 0.15s}
 .plan-del:hover{border-color:#dc2626;color:#dc2626}
 .plan-files{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.plan-file-chip{background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:2px 8px;font-size:10px;color:#1d4ed8;cursor:pointer}
-.success-msg{padding:0.7rem 1rem;background:#f0fdf4;border-radius:8px;font-size:12px;color:#14532d;margin-top:0.7rem;border:1px solid #bbf7d0}
+.plan-file-chip{background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:2px 8px;font-size:10px;color:#1d4ed8;cursor:pointer;font-weight:500}
+.success-msg{padding:0.7rem 1rem;background:#f0fdf4;border-radius:9px;font-size:12px;color:#14532d;margin-top:0.7rem;border:1px solid #bbf7d0;font-weight:500}
+.page-title{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:1.1rem;display:flex;align-items:center;gap:8px;color:var(--text)}
+.accent-bar{width:4px;height:1rem;border-radius:2px;flex-shrink:0}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 </style>
 </head>
 <body>
 
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="nav-logo" onclick="showPage('home');setNavActive('nl-home')">
+    ZP10 <span>NRW</span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" id="nl-home" onclick="showPage('home');setNavActive('nl-home')">Start</button>
+    <button class="nav-link" id="nl-ki" onclick="sideNav('ki-tutor','sb-ki','g');setNavActive('nl-ki')">KI-Tutor</button>
+    <button class="nav-link" id="nl-ue" onclick="sideNav('uebungen','sb-ue','g');setNavActive('nl-ue')">Übungen</button>
+    <button class="nav-link" id="nl-lz" onclick="sideNav('lernzettel','sb-lz','g');setNavActive('nl-lz')">Lernzettel</button>
+    <button class="nav-link" id="nl-pl" onclick="sideNav('lernplan','sb-pl','g');setNavActive('nl-pl')">Lernplan</button>
+  </div>
+</nav>
+
+<div class="app">
+
+<!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-text">ZP10 NRW</div>
-    <div class="logo-sub">Gymnasium &amp; Realschule · Klasse 10</div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Allgemein</div>
+    <button class="side-btn g active" id="sb-home" onclick="sideNav('home','sb-home','g')"><span class="side-icon">🏠</span>Startseite</button>
+    <button class="side-btn g" id="sb-ki" onclick="sideNav('ki-tutor','sb-ki','g')"><span class="side-icon">🤖</span>KI-Tutor</button>
+    <button class="side-btn g" id="sb-ue" onclick="sideNav('uebungen','sb-ue','g')"><span class="side-icon">✏️</span>Übungsaufgaben</button>
+    <button class="side-btn g" id="sb-lz" onclick="sideNav('lernzettel','sb-lz','g')"><span class="side-icon">📂</span>Lernzettel</button>
+    <button class="side-btn g" id="sb-pl" onclick="sideNav('lernplan','sb-pl','g')"><span class="side-icon">📅</span>Lernplan</button>
+    <button class="side-btn g" id="sb-vok" onclick="sideNav('e-vokabeln','sb-vok','g')"><span class="side-icon">🃏</span>Vokabeltrainer</button>
   </div>
-  <div class="sidebar-group">
-    <div class="sidebar-group-label">Allgemein</div>
-    <button class="nav-item active" onclick="nav('ki-tutor',this)"><span class="dot da"></span>KI-Tutor</button>
-    <button class="nav-item" onclick="nav('lernplan',this)"><span class="dot dplan"></span>Lernplan</button>
-    <button class="nav-item" onclick="nav('uebungen',this)"><span class="dot du"></span>Übungsaufgaben</button>
-    <button class="nav-item" onclick="nav('lernzettel',this)"><span class="dot dlz"></span>Lernzettel</button>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Mathematik</div>
+    <button class="side-btn m" id="sb-m" onclick="sideNav('mathe','sb-m','m')"><span class="dot dm"></span>Übersicht</button>
+    <button class="side-btn m" id="sb-ma" onclick="sideNav('m-algebra','sb-ma','m')"><span class="dot dm"></span>Algebra</button>
+    <button class="side-btn m" id="sb-mg" onclick="sideNav('m-geo','sb-mg','m')"><span class="dot dm"></span>Geometrie</button>
+    <button class="side-btn m" id="sb-ms" onclick="sideNav('m-stoch','sb-ms','m')"><span class="dot dm"></span>Stochastik</button>
+    <button class="side-btn m" id="sb-mf" onclick="sideNav('m-fkt','sb-mf','m')"><span class="dot dm"></span>Funktionen</button>
   </div>
-  <div class="sidebar-group">
-    <div class="sidebar-group-label">Mathematik</div>
-    <button class="nav-item" onclick="nav('m-algebra',this)"><span class="dot dm"></span>Algebra</button>
-    <button class="nav-item" onclick="nav('m-geo',this)"><span class="dot dm"></span>Geometrie</button>
-    <button class="nav-item" onclick="nav('m-stoch',this)"><span class="dot dm"></span>Stochastik</button>
-    <button class="nav-item" onclick="nav('m-fkt',this)"><span class="dot dm"></span>Funktionen</button>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Deutsch</div>
+    <button class="side-btn d" id="sb-d" onclick="sideNav('deutsch','sb-d','d')"><span class="dot dd"></span>Übersicht</button>
+    <button class="side-btn d" id="sb-da" onclick="sideNav('d-aufsatz','sb-da','d')"><span class="dot dd"></span>Aufsatzarten</button>
+    <button class="side-btn d" id="sb-dg" onclick="sideNav('d-grammatik','sb-dg','d')"><span class="dot dd"></span>Grammatik</button>
+    <button class="side-btn d" id="sb-ds" onclick="sideNav('d-analyse','sb-ds','d')"><span class="dot dd"></span>Textanalyse</button>
   </div>
-  <div class="sidebar-group">
-    <div class="sidebar-group-label">Deutsch</div>
-    <button class="nav-item" onclick="nav('d-aufsatz',this)"><span class="dot dd"></span>Aufsatzarten</button>
-    <button class="nav-item" onclick="nav('d-grammatik',this)"><span class="dot dd"></span>Grammatik</button>
-    <button class="nav-item" onclick="nav('d-analyse',this)"><span class="dot dd"></span>Textanalyse</button>
-  </div>
-  <div class="sidebar-group">
-    <div class="sidebar-group-label">Englisch</div>
-    <button class="nav-item" onclick="nav('e-zeiten',this)"><span class="dot de"></span>Zeitformen</button>
-    <button class="nav-item" onclick="nav('e-grammar',this)"><span class="dot de"></span>Grammatik</button>
-    <button class="nav-item" onclick="nav('e-writing',this)"><span class="dot de"></span>Writing</button>
-    <button class="nav-item" onclick="nav('e-vokabeln',this)"><span class="dot dv"></span>Vokabeltrainer</button>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Englisch</div>
+    <button class="side-btn e" id="sb-e" onclick="sideNav('englisch','sb-e','e')"><span class="dot de"></span>Übersicht</button>
+    <button class="side-btn e" id="sb-ez" onclick="sideNav('e-zeiten','sb-ez','e')"><span class="dot de"></span>Zeitformen</button>
+    <button class="side-btn e" id="sb-eg" onclick="sideNav('e-grammar','sb-eg','e')"><span class="dot de"></span>Grammatik</button>
+    <button class="side-btn e" id="sb-ew" onclick="sideNav('e-writing','sb-ew','e')"><span class="dot de"></span>Writing</button>
   </div>
 </div>
 
 <div class="content">
 
-<!-- KI-TUTOR -->
-<div class="page active" id="page-ki-tutor">
-  <div class="page-title"><span class="accent-bar" style="background:var(--accent)"></span>KI-Tutor</div>
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
-    <div style="background:var(--text);color:white;padding:0.75rem 1rem;display:flex;align-items:center;gap:8px">
-      <div style="width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;flex-shrink:0"></div>
-      <div>
-        <div style="font-size:13px;font-weight:500">ZP10-Assistent (Gemini)</div>
-        <div style="font-size:10px;opacity:0.6">Mathe · Deutsch · Englisch – Klasse 10 NRW</div>
+<!-- ══ STARTSEITE ══ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-eyebrow">Gymnasium &amp; Realschule · NRW</div>
+    <div class="hero-title">Vorbereitung auf die <span>ZP10</span></div>
+    <div class="hero-sub">Alles was du für die Zentrale Prüfung brauchst – Formeln, Übungen, KI-Tutor und mehr.</div>
+    <div class="hero-chips">
+      <span class="hero-chip">📐 Mathematik</span>
+      <span class="hero-chip">📖 Deutsch</span>
+      <span class="hero-chip">🌍 Englisch</span>
+      <span class="hero-chip">🤖 KI-Tutor</span>
+    </div>
+  </div>
+
+  <div style="font-family:'Oswald',sans-serif;font-weight:800;font-size:1rem;margin-bottom:0.8rem;color:var(--text)">Fächer</div>
+  <div class="fach-grid">
+    <div class="fach-card mc" onclick="sideNav('mathe','sb-m','m')">
+      <div class="fach-emoji">📐</div>
+      <div class="fach-name">Mathematik</div>
+      <div class="fach-desc">Algebra, Geometrie, Stochastik &amp; Funktionen auf ZP10-Niveau</div>
+      <div class="fach-tags">
+        <span class="fach-tag">Algebra</span><span class="fach-tag">Geometrie</span>
+        <span class="fach-tag">Stochastik</span><span class="fach-tag">Funktionen</span>
       </div>
+      <button class="fach-btn mb">Mathe öffnen →</button>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:5px;padding:0.6rem 0.8rem;border-bottom:1px solid var(--border)">
-      <button class="qp-btn" onclick="qask('Erkläre die pq-Formel mit einem Beispiel')">pq-Formel</button>
-      <button class="qp-btn" onclick="qask('Wie schreibe ich eine Erörterung auf Deutsch?')">Erörterung</button>
-      <button class="qp-btn" onclick="qask('Erkläre Simple Past vs Present Perfect auf Englisch')">Zeitformen EN</button>
-      <button class="qp-btn" onclick="qask('Was sind die ZP10 Themen in Mathe NRW?')">ZP10 Themen</button>
-      <button class="qp-btn" onclick="qask('Erstelle eine typische ZP10-Matheaufgabe für mich')">Aufgabe generieren</button>
+    <div class="fach-card dc" onclick="sideNav('deutsch','sb-d','d')">
+      <div class="fach-emoji">📖</div>
+      <div class="fach-name">Deutsch</div>
+      <div class="fach-desc">Aufsatzarten, Grammatik, Stilmittel &amp; Textanalyse</div>
+      <div class="fach-tags">
+        <span class="fach-tag">Erörterung</span><span class="fach-tag">Analyse</span>
+        <span class="fach-tag">Grammatik</span><span class="fach-tag">Stilmittel</span>
+      </div>
+      <button class="fach-btn db">Deutsch öffnen →</button>
     </div>
-    <div id="chatarea" style="height:320px;overflow-y:auto;padding:0.85rem;display:flex;flex-direction:column;gap:8px">
-      <div class="msg ai">Hallo! Ich bin dein ZP10-Tutor. Stell mir Fragen zu Mathe, Deutsch oder Englisch auf Klasse-10-Niveau NRW!</div>
+    <div class="fach-card ec" onclick="sideNav('englisch','sb-e','e')">
+      <div class="fach-emoji">🌍</div>
+      <div class="fach-name">Englisch</div>
+      <div class="fach-desc">Zeitformen, Grammatik, Writing &amp; Vokabeln</div>
+      <div class="fach-tags">
+        <span class="fach-tag">Zeitformen</span><span class="fach-tag">Grammar</span>
+        <span class="fach-tag">Writing</span><span class="fach-tag">Vokabeln</span>
+      </div>
+      <button class="fach-btn eb">Englisch öffnen →</button>
     </div>
-    <div style="display:flex;gap:6px;padding:0.6rem 0.8rem;border-top:1px solid var(--border)">
-      <select id="fsel" style="padding:0 8px;border:1px solid var(--border);border-radius:7px;background:#f9fafb;font-family:inherit;font-size:12px;color:var(--text);cursor:pointer;height:32px">
-        <option value="Mathe">Mathe</option>
-        <option value="Deutsch">Deutsch</option>
-        <option value="Englisch">Englisch</option>
-        <option value="Allgemein">Allgemein</option>
-      </select>
-      <input id="cinput" type="text" placeholder="Deine Frage..." onkeydown="if(event.key==='Enter')send()"
-        style="flex:1;padding:0 10px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;background:#f9fafb;color:var(--text);outline:none;height:32px">
-      <button id="sbtn" onclick="send()"
-        style="background:var(--accent);color:white;border:none;border-radius:7px;padding:0 14px;cursor:pointer;font-size:14px;height:32px">→</button>
+  </div>
+
+  <div style="font-family:'Oswald',sans-serif;font-weight:800;font-size:1rem;margin-bottom:0.8rem;color:var(--text)">Tools</div>
+  <div class="tools-row">
+    <div class="tool-card" onclick="sideNav('ki-tutor','sb-ki','g')">
+      <div class="tool-icon" style="background:#eff6ff">🤖</div>
+      <div class="tool-info">
+        <div class="tool-name">KI-Tutor</div>
+        <div class="tool-desc">Fragen stellen, erklären lassen, üben</div>
+      </div>
+      <div class="tool-arrow">›</div>
+    </div>
+    <div class="tool-card" onclick="sideNav('uebungen','sb-ue','g')">
+      <div class="tool-icon" style="background:#f5f3ff">✏️</div>
+      <div class="tool-info">
+        <div class="tool-name">Übungsaufgaben</div>
+        <div class="tool-desc">150+ ZP10-typische Aufgaben mit Lösungen</div>
+      </div>
+      <div class="tool-arrow">›</div>
+    </div>
+    <div class="tool-card" onclick="sideNav('lernplan','sb-pl','g')">
+      <div class="tool-icon" style="background:#f0fdf4">📅</div>
+      <div class="tool-info">
+        <div class="tool-name">Lernplan</div>
+        <div class="tool-desc">Aufgaben organisieren &amp; Dateien anhängen</div>
+      </div>
+      <div class="tool-arrow">›</div>
+    </div>
+    <div class="tool-card" onclick="sideNav('lernzettel','sb-lz','g')">
+      <div class="tool-icon" style="background:#fffbeb">📂</div>
+      <div class="tool-info">
+        <div class="tool-name">Lernzettel</div>
+        <div class="tool-desc">Notizen speichern &amp; verwalten</div>
+      </div>
+      <div class="tool-arrow">›</div>
     </div>
   </div>
 </div>
 
-<!-- LERNPLAN -->
-<div class="page active" id="page-lernplan">
-  <div class="page-title"><span class="accent-bar" style="background:var(--green)"></span>Lernplan</div>
-  <div class="plan-header">
-    <div class="plan-stat"><div class="plan-stat-num" id="stat-gesamt">0</div><div class="plan-stat-label">Aufgaben gesamt</div></div>
-    <div class="plan-stat"><div class="plan-stat-num" style="color:var(--green)" id="stat-done">0</div><div class="plan-stat-label">Erledigt</div></div>
-    <div class="plan-stat"><div class="plan-stat-num" style="color:var(--mathe)" id="stat-offen">0</div><div class="plan-stat-label">Noch offen</div></div>
+<!-- ══ MATHE ÜBERSICHT ══ -->
+<div class="page" id="page-mathe">
+  <div class="fach-hero mh">
+    <div class="fach-hero-title">📐 Mathematik</div>
+    <div class="fach-hero-sub">ZP10 NRW · Klasse 10 · Gymnasium &amp; Realschule</div>
   </div>
-  <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
-  <div class="plan-add">
-    <div class="plan-add-title">Neue Lernaufgabe</div>
-    <div class="plan-row">
-      <input class="plan-inp" id="plan-task" placeholder="Was möchtest du lernen?" style="flex:2">
-      <select class="plan-sel" id="plan-fach">
-        <option value="mathe">Mathe</option>
-        <option value="deutsch">Deutsch</option>
-        <option value="englisch">Englisch</option>
-        <option value="sonstiges">Sonstiges</option>
-      </select>
+  <div class="fach-subtopic-grid">
+    <div class="subtopic-card" onclick="sideNav('m-algebra','sb-ma','m')">
+      <span class="subtopic-emoji">🔢</span>
+      <div><div class="subtopic-name">Algebra</div><div class="subtopic-count">pq-Formel, Binomische Formeln, Prozente…</div></div>
     </div>
-    <div class="plan-row">
-      <input class="plan-inp" type="date" id="plan-datum">
-      <select class="plan-sel" id="plan-prio">
-        <option value="hoch">Hohe Priorität</option>
-        <option value="mittel" selected>Mittlere Priorität</option>
-        <option value="niedrig">Niedrige Priorität</option>
-      </select>
-      <input class="plan-inp" id="plan-dauer" placeholder="Dauer (z.B. 30 Min)" style="max-width:150px">
+    <div class="subtopic-card" onclick="sideNav('m-geo','sb-mg','m')">
+      <span class="subtopic-emoji">📐</span>
+      <div><div class="subtopic-name">Geometrie</div><div class="subtopic-count">Pythagoras, Flächen, Körper…</div></div>
     </div>
-    <div class="file-upload-area" onclick="document.getElementById('plan-file-input').click()">
-      <p>Dateien anhängen (PDF, Bilder, Word)</p>
-      <span style="font-size:11px;color:var(--muted)">Klicken zum Auswählen</span>
+    <div class="subtopic-card" onclick="sideNav('m-stoch','sb-ms','m')">
+      <span class="subtopic-emoji">🎲</span>
+      <div><div class="subtopic-name">Stochastik</div><div class="subtopic-count">Wahrscheinlichkeit, Baumdiagramm…</div></div>
     </div>
-    <input type="file" id="plan-file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt" style="display:none" onchange="handleFiles(this)">
-    <div class="attached-files" id="attached-files"></div>
-    <button class="plan-add-btn" onclick="addPlanTask()">+ Hinzufügen</button>
-    <div id="plan-msg" style="display:none" class="success-msg">Aufgabe gespeichert!</div>
+    <div class="subtopic-card" onclick="sideNav('m-fkt','sb-mf','m')">
+      <span class="subtopic-emoji">📈</span>
+      <div><div class="subtopic-name">Funktionen</div><div class="subtopic-count">Lineare, quadratische, exponentielle Fkt…</div></div>
+    </div>
   </div>
-  <div class="plan-filter">
-    <button class="pf-btn active" onclick="filterPlan('all',this)">Alle</button>
-    <button class="pf-btn" onclick="filterPlan('offen',this)">Offen</button>
-    <button class="pf-btn" onclick="filterPlan('done',this)">Erledigt</button>
-    <button class="pf-btn" onclick="filterPlan('mathe',this)">Mathe</button>
-    <button class="pf-btn" onclick="filterPlan('deutsch',this)">Deutsch</button>
-    <button class="pf-btn" onclick="filterPlan('englisch',this)">Englisch</button>
-    <button class="ctrl-btn" style="margin-left:auto;color:var(--mathe)" onclick="clearDone()">Erledigte löschen</button>
-  </div>
-  <div class="plan-list" id="plan-list"></div>
-  <div id="plan-empty" class="empty-hint" style="display:none">Noch keine Aufgaben. Füge deine erste Lernaufgabe hinzu!</div>
 </div>
 
-<!-- ÜBUNGEN -->
+<!-- ══ DEUTSCH ÜBERSICHT ══ -->
+<div class="page" id="page-deutsch">
+  <div class="fach-hero dh">
+    <div class="fach-hero-title">📖 Deutsch</div>
+    <div class="fach-hero-sub">ZP10 NRW · Klasse 10 · Gymnasium &amp; Realschule</div>
+  </div>
+  <div class="fach-subtopic-grid">
+    <div class="subtopic-card" onclick="sideNav('d-aufsatz','sb-da','d')">
+      <span class="subtopic-emoji">✍️</span>
+      <div><div class="subtopic-name">Aufsatzarten</div><div class="subtopic-count">Erörterung, Inhaltsangabe, Analyse…</div></div>
+    </div>
+    <div class="subtopic-card" onclick="sideNav('d-grammatik','sb-dg','d')">
+      <span class="subtopic-emoji">📝</span>
+      <div><div class="subtopic-name">Grammatik</div><div class="subtopic-count">Satzglieder, Passiv, Komma-Regeln…</div></div>
+    </div>
+    <div class="subtopic-card" onclick="sideNav('d-analyse','sb-ds','d')">
+      <span class="subtopic-emoji">🔍</span>
+      <div><div class="subtopic-name">Textanalyse</div><div class="subtopic-count">Stilmittel, Gedichtanalyse…</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ENGLISCH ÜBERSICHT ══ -->
+<div class="page" id="page-englisch">
+  <div class="fach-hero eh">
+    <div class="fach-hero-title">🌍 Englisch</div>
+    <div class="fach-hero-sub">ZP10 NRW · Klasse 10 · Gymnasium &amp; Realschule</div>
+  </div>
+  <div class="fach-subtopic-grid">
+    <div class="subtopic-card" onclick="sideNav('e-zeiten','sb-ez','e')">
+      <span class="subtopic-emoji">⏰</span>
+      <div><div class="subtopic-name">Zeitformen</div><div class="subtopic-count">Simple Past, Present Perfect, Future…</div></div>
+    </div>
+    <div class="subtopic-card" onclick="sideNav('e-grammar','sb-eg','e')">
+      <span class="subtopic-emoji">📚</span>
+      <div><div class="subtopic-name">Grammatik</div><div class="subtopic-count">Conditionals, Passive, Relative Clauses…</div></div>
+    </div>
+    <div class="subtopic-card" onclick="sideNav('e-writing','sb-ew','e')">
+      <span class="subtopic-emoji">✉️</span>
+      <div><div class="subtopic-name">Writing</div><div class="subtopic-count">Essay, Formal Letter, Linking Words…</div></div>
+    </div>
+    <div class="subtopic-card" onclick="sideNav('e-vokabeln','sb-vok','g')">
+      <span class="subtopic-emoji">🃏</span>
+      <div><div class="subtopic-name">Vokabeltrainer</div><div class="subtopic-count">Vokabeln eingeben &amp; lernen</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ KI-TUTOR ══ -->
+<div class="page" id="page-ki-tutor">
+  <div class="ki-hero">
+    <div class="ki-hero-left">
+      <div class="ki-title">KI-Tutor</div>
+      <div class="ki-sub">Gemini · Mathe · Deutsch · Englisch · Klasse 10 NRW</div>
+    </div>
+    <div class="ki-status"><div class="ki-dot"></div>Online</div>
+  </div>
+  <div class="chat-wrap">
+    <div class="quick-row">
+      <button class="qp" onclick="qask('Erkläre die pq-Formel mit einem Beispiel')">📐 pq-Formel</button>
+      <button class="qp" onclick="qask('Wie schreibe ich eine Erörterung?')">📝 Erörterung</button>
+      <button class="qp" onclick="qask('Erkläre Simple Past vs Present Perfect')">🇬🇧 Zeitformen</button>
+      <button class="qp" onclick="qask('Was kommt in der ZP10 Mathe NRW dran?')">📋 ZP10 Themen</button>
+      <button class="qp" onclick="qask('Erstelle eine ZP10-Matheaufgabe mit Lösung')">✏️ Aufgabe</button>
+    </div>
+    <div id="chatarea" class="chat-area">
+      <div class="msg ai">👋 Hallo! Ich bin dein ZP10-Tutor. Stell mir Fragen zu Mathe, Deutsch oder Englisch – ich erkläre es dir klar und verständlich!</div>
+    </div>
+    <div class="chat-input-row">
+      <select id="fsel" class="fsel">
+        <option value="Mathe">📐 Mathe</option>
+        <option value="Deutsch">📖 Deutsch</option>
+        <option value="Englisch">🌍 Englisch</option>
+        <option value="Allgemein">❓ Allgemein</option>
+      </select>
+      <input id="cinput" class="cinp" type="text" placeholder="Deine Frage hier eingeben..." onkeydown="if(event.key==='Enter')send()">
+      <button id="sbtn" class="sbtn" onclick="send()">→</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ÜBUNGEN ══ -->
 <div class="page" id="page-uebungen">
-  <div class="page-title"><span class="accent-bar" style="background:var(--accent2)"></span>Übungsaufgaben</div>
+  <div class="page-title"><span class="accent-bar" style="background:var(--accent)"></span>Übungsaufgaben</div>
   <div class="ueb-controls">
     <select class="usel" id="ueb-fach" onchange="onFachChange()">
-      <option value="mathe">Mathematik</option>
-      <option value="deutsch">Deutsch</option>
-      <option value="englisch">Englisch</option>
+      <option value="mathe">📐 Mathematik</option>
+      <option value="deutsch">📖 Deutsch</option>
+      <option value="englisch">🌍 Englisch</option>
     </select>
     <select class="usel" id="ueb-thema" onchange="onThemaChange()"></select>
     <span class="ueb-meta" id="ueb-meta"></span>
-    <button class="nav-aufg-btn" onclick="randomAufgabe()">Zufällig</button>
+    <button class="nav-aufg-btn" onclick="randomAufgabe()">🔀 Zufällig</button>
   </div>
   <div class="aufg-box" id="aufg-box">
     <div style="color:var(--muted);font-size:13px;text-align:center;padding:2rem 0">Thema wählen – Aufgabe erscheint hier</div>
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
-    <button class="nav-aufg-btn" style="background:#f3f4f6;color:var(--text);border:1px solid var(--border)" onclick="prevAufgabe()">Vorherige</button>
-    <button class="nav-aufg-btn" onclick="nextAufgabe()">Nächste</button>
+    <button class="nav-aufg-btn" style="background:#f1f5f9;color:var(--text);border:1px solid var(--border)" onclick="prevAufgabe()">← Vorherige</button>
+    <button class="nav-aufg-btn" onclick="nextAufgabe()">Nächste →</button>
   </div>
 </div>
 
-<!-- LERNZETTEL -->
+<!-- ══ LERNZETTEL ══ -->
 <div class="page" id="page-lernzettel">
   <div class="page-title"><span class="accent-bar" style="background:var(--amber)"></span>Lernzettel</div>
   <div id="lz-list-wrap" class="lz-list-wrap"></div>
-  <div id="lz-empty" class="empty-hint" style="display:none">Noch keine Lernzettel.</div>
+  <div id="lz-empty" class="empty-hint" style="display:none">Noch keine Lernzettel. Trage deinen ersten ein!</div>
   <div class="upload-area">
     <p>Lernzettel hinzufügen und lokal speichern</p>
     <button class="btn-primary" onclick="toggleLZForm()">+ Neuer Lernzettel</button>
@@ -348,9 +566,51 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
       <button class="btn-primary" onclick="saveLZ()">Speichern</button>
       <button class="ctrl-btn" onclick="toggleLZForm()">Abbrechen</button>
     </div>
-    <div id="lz-save-msg" style="display:none" class="success-msg">Gespeichert!</div>
+    <div id="lz-save-msg" style="display:none" class="success-msg">✓ Gespeichert!</div>
   </div>
-  <p style="font-size:11px;color:var(--muted);margin-top:0.7rem">Lernzettel werden lokal im Browser gespeichert.</p>
+  <p style="font-size:11px;color:var(--muted);margin-top:0.7rem">Lernzettel werden lokal in deinem Browser gespeichert.</p>
+</div>
+
+<!-- ══ LERNPLAN ══ -->
+<div class="page" id="page-lernplan">
+  <div class="page-title"><span class="accent-bar" style="background:var(--green)"></span>Lernplan</div>
+  <div class="plan-stats">
+    <div class="plan-stat"><div class="plan-stat-num" id="stat-gesamt">0</div><div class="plan-stat-label">Gesamt</div></div>
+    <div class="plan-stat"><div class="plan-stat-num" style="color:var(--green)" id="stat-done">0</div><div class="plan-stat-label">Erledigt</div></div>
+    <div class="plan-stat"><div class="plan-stat-num" style="color:var(--mathe)" id="stat-offen">0</div><div class="plan-stat-label">Offen</div></div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+  <div class="plan-add">
+    <div class="plan-add-title">Neue Lernaufgabe</div>
+    <div class="plan-row">
+      <input class="plan-inp" id="plan-task" placeholder="Was möchtest du lernen?" style="flex:2">
+      <select class="plan-sel" id="plan-fach"><option value="mathe">Mathe</option><option value="deutsch">Deutsch</option><option value="englisch">Englisch</option><option value="sonstiges">Sonstiges</option></select>
+    </div>
+    <div class="plan-row">
+      <input class="plan-inp" type="date" id="plan-datum">
+      <select class="plan-sel" id="plan-prio"><option value="hoch">🔴 Hoch</option><option value="mittel" selected>🟡 Mittel</option><option value="niedrig">🟢 Niedrig</option></select>
+      <input class="plan-inp" id="plan-dauer" placeholder="Dauer" style="max-width:130px">
+    </div>
+    <div class="file-upload-area" onclick="document.getElementById('plan-file-input').click()">
+      <p>📎 Dateien anhängen (PDF, Bilder, Word)</p>
+      <span style="font-size:11px;color:var(--muted)">Klicken zum Auswählen</span>
+    </div>
+    <input type="file" id="plan-file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt" style="display:none" onchange="handleFiles(this)">
+    <div class="attached-files" id="attached-files"></div>
+    <button class="plan-add-btn" onclick="addPlanTask()">+ Hinzufügen</button>
+    <div id="plan-msg" style="display:none" class="success-msg">✓ Aufgabe gespeichert!</div>
+  </div>
+  <div class="plan-filter">
+    <button class="pf-btn active" onclick="filterPlan('all',this)">Alle</button>
+    <button class="pf-btn" onclick="filterPlan('offen',this)">Offen</button>
+    <button class="pf-btn" onclick="filterPlan('done',this)">Erledigt</button>
+    <button class="pf-btn" onclick="filterPlan('mathe',this)">Mathe</button>
+    <button class="pf-btn" onclick="filterPlan('deutsch',this)">Deutsch</button>
+    <button class="pf-btn" onclick="filterPlan('englisch',this)">Englisch</button>
+    <button class="ctrl-btn" style="margin-left:auto;color:var(--mathe)" onclick="clearDone()">Erledigte löschen</button>
+  </div>
+  <div class="plan-list" id="plan-list"></div>
+  <div id="plan-empty" class="empty-hint" style="display:none">Noch keine Aufgaben. Füge deine erste hinzu!</div>
 </div>
 
 <!-- MATHE ALGEBRA -->
@@ -472,13 +732,109 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 </div>
 
 </div><!-- end content -->
-
 <script>
-// Aufgaben-Datenbank als JSON-String um Parsing-Probleme zu vermeiden
+// ── NAVIGATION ──
+function showPage(id) {
+  if(id === "home") { document.querySelector(".sidebar").style.display = "none"; }
+  else { document.querySelector(".sidebar").style.display = "block"; }
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  var el = document.getElementById('page-' + id);
+  if(el) el.classList.add('active');
+}
+
+function setNavActive(id) {
+  document.querySelectorAll('.nav-link').forEach(function(b){b.classList.remove('active')});
+  var el = document.getElementById(id);
+  if(el) el.classList.add('active');
+}
+
+function sideNav(pageId, btnId, colorClass) {
+  // Show sidebar when not on home
+  document.querySelector(".sidebar").style.display = "block";
+  showPage(pageId);
+  document.querySelectorAll('.side-btn').forEach(function(b){
+    b.classList.remove('active');
+  });
+  var btn = document.getElementById(btnId);
+  if(btn) {
+    btn.classList.add('active');
+    btn.classList.add(colorClass);
+  }
+}
+
+// ── KI TUTOR ──
+var chatHistory = [];
+
+function formatText(text) {
+  var html = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.*?)__/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+  return '<p>' + html + '</p>';
+}
+
+function addMsg(text, type) {
+  var a = document.getElementById('chatarea');
+  var id = 'm' + Date.now() + Math.random();
+  var d = document.createElement('div');
+  d.className = 'msg ' + type;
+  d.id = id;
+  if(type === 'ai') { d.innerHTML = formatText(text); }
+  else { d.textContent = text; }
+  a.appendChild(d);
+  a.scrollTop = a.scrollHeight;
+  return id;
+}
+
+function updateMsg(id, text) {
+  var el = document.getElementById(id);
+  if(!el) return;
+  el.innerHTML = formatText(text);
+  if(window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([el]);
+  }
+  var a = document.getElementById('chatarea');
+  if(a) a.scrollTop = a.scrollHeight;
+}
+
+async function send() {
+  var inp = document.getElementById('cinput');
+  var btn = document.getElementById('sbtn');
+  var fach = document.getElementById('fsel').value;
+  var text = inp.value.trim();
+  if(!text) return;
+  addMsg(text, 'user');
+  inp.value = '';
+  btn.disabled = true;
+  var lid = addMsg('...', 'ai');
+  try {
+    var r = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, fach: fach, history: chatHistory })
+    });
+    var d = await r.json();
+    var reply = d.text || 'Fehler beim Laden.';
+    chatHistory.push({ role: 'user', text: '[' + fach + '] ' + text });
+    chatHistory.push({ role: 'model', text: reply });
+    updateMsg(lid, reply);
+  } catch(e) {
+    updateMsg(lid, 'Verbindungsfehler! Bitte nochmal versuchen.');
+  }
+  btn.disabled = false;
+}
+
+function qask(text) {
+  sideNav('ki-tutor','sb-ki','g');
+  document.getElementById('cinput').value = text;
+  send();
+}
+
 var AUFGABEN_JSON = '{"mathe":{"Algebra":[{"t":"Löse mit der pq-Formel:\\nx\\u00b2 + 6x + 8 = 0","l":"p=6, q=8\\nx = -3 \\u00b1 \\u221a(9-8) = -3 \\u00b1 1\\nx\\u2081 = -2, x\\u2082 = -4"},{"t":"Löse: x\\u00b2 - 5x + 6 = 0","l":"p=-5, q=6\\nx = 2,5 \\u00b1 \\u221a(6,25-6) = 2,5 \\u00b1 0,5\\nx\\u2081=3, x\\u2082=2"},{"t":"Löse: x\\u00b2 - 8x + 15 = 0","l":"p=-8, q=15\\nx = 4 \\u00b1 \\u221a(16-15) = 4 \\u00b1 1\\nx\\u2081=5, x\\u2082=3"},{"t":"Löse: x\\u00b2 + 4x - 12 = 0","l":"p=4, q=-12\\nx = -2 \\u00b1 \\u221a(4+12) = -2 \\u00b1 4\\nx\\u2081=2, x\\u2082=-6"},{"t":"Löse: x\\u00b2 - 10x + 25 = 0","l":"p=-10, q=25\\nx = 5 \\u00b1 \\u221a(25-25) = 5 \\u00b1 0\\nx = 5 (doppelte Lösung)"},{"t":"Vereinfache: (x + 3)\\u00b2","l":"(x+3)\\u00b2 = x\\u00b2 + 6x + 9\\n(1. binomische Formel: a=x, b=3)"},{"t":"Vereinfache: (x - 5)\\u00b2","l":"(x-5)\\u00b2 = x\\u00b2 - 10x + 25\\n(2. binomische Formel: a=x, b=5)"},{"t":"Berechne: (x + 4)(x - 4)","l":"(x+4)(x-4) = x\\u00b2 - 16\\n(3. binomische Formel: Differenz der Quadrate)"},{"t":"Berechne: (2x + 3)\\u00b2","l":"(2x+3)\\u00b2 = 4x\\u00b2 + 12x + 9\\n(a=2x, b=3: a\\u00b2+2ab+b\\u00b2)"},{"t":"Berechne: (3x - 2)(3x + 2)","l":"(3x-2)(3x+2) = 9x\\u00b2 - 4\\n(Differenz der Quadrate: a=3x, b=2)"},{"t":"Ein Pullover kostet nach 20% Rabatt 48 €. Was war der Originalpreis?","l":"48 € = 80% des Grundwertes\\nG = 48 × 100 ÷ 80 = 60 €"},{"t":"Wie viel % sind 45 € von 180 €?","l":"p = (45 × 100) ÷ 180 = 25%"},{"t":"Ein Preis steigt von 80 € auf 100 €. Um wie viel Prozent ist er gestiegen?","l":"Differenz: 20 € \\np = (20 × 100) ÷ 80 = 25%"},{"t":"Vereinfache: a\\u2074 × a\\u00b3 ÷ a\\u00b2","l":"a\\u2074 × a\\u00b3 = a\\u2077\\na\\u2077 ÷ a\\u00b2 = a\\u2075"},{"t":"Vereinfache: (x\\u00b3)\\u00b2","l":"(x\\u00b3)\\u00b2 = x\\u2076\\n(Potenz einer Potenz: Exponenten multiplizieren)"},{"t":"Faktorisiere: x\\u00b2 - 25","l":"x\\u00b2 - 25 = (x+5)(x-5)\\n(3. binomische Formel mit a=x, b=5)"},{"t":"Faktorisiere: x\\u00b2 - 16","l":"x\\u00b2 - 16 = (x+4)(x-4)"},{"t":"Löse: 2x\\u00b2 - 8 = 0","l":"2x\\u00b2 = 8 → x\\u00b2 = 4 → x = \\u00b12"},{"t":"Berechne: 16\\u00bd","l":"16\\u00bd = \\u221a16 = 4\\n(Potenz mit Exponent 1/2 = Wurzel)"},{"t":"Berechne: 27^(1/3)","l":"27^(1/3) = \\u00b327 = 3\\n(Exponent 1/3 = dritte Wurzel)"},{"t":"Löse: x\\u00b2 + 2x - 15 = 0","l":"p=2, q=-15\\nx = -1 \\u00b1 \\u221a(1+15) = -1 \\u00b1 4\\nx\\u2081=3, x\\u2082=-5"},{"t":"Berechne den Prozentwert:\\n15% von 240 €","l":"W = 240 × 15 ÷ 100 = 36 €"},{"t":"Vereinfache: (2a)\\u00b3","l":"(2a)\\u00b3 = 2\\u00b3 × a\\u00b3 = 8a\\u00b3"},{"t":"Löse die Gleichung:\\n3x\\u00b2 = 75","l":"x\\u00b2 = 25 → x = \\u00b15"},{"t":"Ein Artikel kostet 119 € inkl. 19% MwSt. Wie viel ist der Nettopreis?","l":"119 € = 119% des Nettopreises\\nNetto = 119 ÷ 1,19 ≈ 100 €"}],"Geometrie":[{"t":"Dreieck mit Katheten a=6 cm, b=8 cm.\\nBerechne die Hypotenuse c.","l":"c\\u00b2 = 6\\u00b2 + 8\\u00b2 = 36 + 64 = 100\\nc = 10 cm"},{"t":"Berechne Fläche und Umfang eines Kreises mit r=5 cm.","l":"A = \\u03c0 × 5\\u00b2 = 25\\u03c0 \\u2248 78,54 cm\\u00b2\\nU = 2 × \\u03c0 × 5 = 10\\u03c0 \\u2248 31,42 cm"},{"t":"Trapez: a=8 cm, c=4 cm, h=5 cm. Berechne die Fläche.","l":"A = (8+4) ÷ 2 × 5 = 6 × 5 = 30 cm\\u00b2"},{"t":"Zylinder: r=3 cm, h=10 cm. Berechne das Volumen.","l":"V = \\u03c0 × 3\\u00b2 × 10 = 90\\u03c0 \\u2248 282,7 cm\\u00b3"},{"t":"Pyramide mit quadratischer Grundfläche: Seite=6 cm, h=4 cm. Berechne V.","l":"G = 6\\u00b2 = 36 cm\\u00b2\\nV = 36 × 4 ÷ 3 = 48 cm\\u00b3"},{"t":"Dreieck: g=10 cm, h=7 cm. Berechne die Fläche.","l":"A = (10 × 7) ÷ 2 = 35 cm\\u00b2"},{"t":"Kugel mit r=6 cm. Berechne das Volumen.","l":"V = (4 × \\u03c0 × 6\\u00b3) ÷ 3 = 288\\u03c0 \\u2248 904,8 cm\\u00b3"},{"t":"Rechteck: l=12 cm, b=8 cm. Berechne Fläche und Umfang.","l":"A = 12 × 8 = 96 cm\\u00b2\\nU = 2 × (12+8) = 40 cm"},{"t":"Zwei ähnliche Dreiecke: kleines hat a=4 cm, großes a=10 cm.\\nBerechne den Ähnlichkeitsfaktor k.","l":"k = 10 ÷ 4 = 2,5\\nFlächen skalieren mit k\\u00b2 = 6,25"},{"t":"Kegel: r=4 cm, h=9 cm. Berechne das Volumen.","l":"V = (\\u03c0 × 4\\u00b2 × 9) ÷ 3 = (\\u03c0 × 16 × 9) ÷ 3 = 48\\u03c0 \\u2248 150,8 cm\\u00b3"},{"t":"Ein Quader hat l=5 cm, b=4 cm, h=3 cm.\\nBerechne Volumen und Oberfläche.","l":"V = 5 × 4 × 3 = 60 cm\\u00b3\\nO = 2×(5×4 + 5×3 + 4×3) = 2×(20+15+12) = 94 cm\\u00b2"},{"t":"Ein Kreis hat den Umfang U=31,4 cm.\\nBerechne den Radius.","l":"U = 2\\u03c0r → r = U ÷ (2\\u03c0) = 31,4 ÷ 6,28 = 5 cm"},{"t":"Wie lang ist die Diagonale eines Rechtecks mit l=8 cm und b=6 cm?","l":"d\\u00b2 = 8\\u00b2 + 6\\u00b2 = 64 + 36 = 100\\nd = 10 cm (Pythagoras)"},{"t":"Ein Dreieck hat die Seiten a=5, b=12, c=13.\\nIst es rechtwinklig?","l":"a\\u00b2 + b\\u00b2 = 25 + 144 = 169 = 13\\u00b2 = c\\u00b2\\nJa, es ist rechtwinklig!"},{"t":"Ein Trapez hat a=10 cm, c=6 cm, h=4 cm.\\nBerechne den Flächeninhalt.","l":"A = (a+c) ÷ 2 × h = (10+6) ÷ 2 × 4 = 8 × 4 = 32 cm\\u00b2"},{"t":"Parallelogramm: Grundseite g=9 cm, Höhe h=6 cm. Berechne die Fläche.","l":"A = g × h = 9 × 6 = 54 cm\\u00b2"},{"t":"Zylinder: r=5 cm, h=12 cm. Berechne die Mantelfläche.","l":"M = 2 × \\u03c0 × r × h = 2 × \\u03c0 × 5 × 12 = 120\\u03c0 \\u2248 376,99 cm\\u00b2"},{"t":"Ein Kreis hat die Fläche A=78,54 cm\\u00b2.\\nBerechne den Radius.","l":"A = \\u03c0r\\u00b2 → r\\u00b2 = 78,54 ÷ \\u03c0 = 25 → r = 5 cm"},{"t":"Zwei ähnliche Quader: Kante des kleinen = 3 cm, des großen = 6 cm.\\nWie verhalten sich die Volumina?","l":"k = 6 ÷ 3 = 2\\nVoluina: k\\u00b3 = 8\\nDas große Volumen ist 8-mal so groß."},{"t":"Berechne den fehlenden Winkel im Dreieck:\\n\\u03b1 = 55°, \\u03b2 = 72°, \\u03b3 = ?","l":"\\u03b1 + \\u03b2 + \\u03b3 = 180°\\n55° + 72° + \\u03b3 = 180°\\n\\u03b3 = 53°"},{"t":"Quadrat mit Seite 7 cm. Berechne Fläche, Umfang und Diagonale.","l":"A = 7\\u00b2 = 49 cm\\u00b2\\nU = 4 × 7 = 28 cm\\nd = 7\\u221a2 \\u2248 9,9 cm"},{"t":"Halbkreis mit r=4 cm. Berechne Fläche und Umfang.","l":"A = (\\u03c0 × 4\\u00b2) ÷ 2 = 8\\u03c0 \\u2248 25,13 cm\\u00b2\\nU = \\u03c0 × 4 + 2 × 4 = 4\\u03c0 + 8 \\u2248 20,57 cm"},{"t":"Berechne die Fläche eines gleichseitigen Dreiecks mit Seite a=6 cm.","l":"h = a ÷ 2 × \\u221a3 = 3\\u221a3 \\u2248 5,196 cm\\nA = (6 × 3\\u221a3) ÷ 2 = 9\\u221a3 \\u2248 15,59 cm\\u00b2"},{"t":"Ein Würfel hat das Volumen V=125 cm\\u00b3. Wie lang ist eine Kante?","l":"V = a\\u00b3 → a = \\u221a\\u00b3(125) = 5 cm"},{"t":"Wie viel Mal passt ein Zylinder (r=3, h=4) in einen Quader (6×6×12)?","l":"V_Zylinder = \\u03c0×9×4 = 36\\u03c0 \\u2248 113,1 cm\\u00b3\\nV_Quader = 6×6×12 = 432 cm\\u00b3\\n432 ÷ 113,1 \\u2248 3,8 → 3 Mal"}],"Stochastik":[{"t":"In einer Klasse: 12 Mädchen, 8 Jungen.\\nEin Kind wird gewählt. P(Mädchen) = ?","l":"P(Mädchen) = 12 ÷ 20 = 0,6 = 60%"},{"t":"Ein Würfel wird zweimal geworfen.\\nP(zweimal eine 6) = ?","l":"P(6 und 6) = 1/6 × 1/6 = 1/36 \\u2248 2,78%\\n(unabhängige Ereignisse: multiplizieren)"},{"t":"4 rote, 6 blaue Kugeln. Zwei werden ohne Zurücklegen gezogen.\\nP(beide rot) = ?","l":"P = 4/10 × 3/9 = 12/90 = 2/15 \\u2248 13,3%\\n(ohne Zurücklegen: Zähler ändert sich)"},{"t":"Eine Münze wird 3-mal geworfen.\\nP(genau 2-mal Kopf) = ?","l":"Günstige Pfade: KKZ, KZK, ZKK\\nP = 3 × (1/2)\\u00b3 = 3/8 = 37,5%"},{"t":"Erwartungswert berechnen:\\nGewinn: 10 € mit P=0,3, Verlust: -3 € sonst","l":"E = 0,3 × 10 + 0,7 × (-3) = 3 - 2,1 = 0,90 €"},{"t":"Urne: 3 rote, 5 blaue Kugeln. Eine wird gezogen.\\nP(rot) und P(nicht rot) = ?","l":"P(rot) = 3/8 = 37,5%\\nP(nicht rot) = 1 - 3/8 = 5/8 = 62,5%"},{"t":"Würfel: Wie groß ist P(gerade Zahl)?","l":"Günstige Ergebnisse: 2, 4, 6 (3 von 6)\\nP(gerade) = 3/6 = 1/2 = 50%"},{"t":"Zwei Würfel werden geworfen. P(Augensumme = 7) = ?","l":"Günstige Paare: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) = 6\\nAlle Ergebnisse: 6×6 = 36\\nP = 6/36 = 1/6 \\u2248 16,7%"},{"t":"4 rote, 6 blaue Kugeln. MIT Zurücklegen: P(beide rot) = ?","l":"P = 4/10 × 4/10 = 16/100 = 16%\\n(mit Zurücklegen: gleiche Wahrscheinlichkeit)"},{"t":"Ein Spieler gewinnt bei Zahl 5 €, verliert bei Kopf 3 €.\\nBerechne den Erwartungswert.","l":"E = 0,5 × 5 + 0,5 × (-3) = 2,5 - 1,5 = 1 €\\nIm Durchschnitt gewinnt man 1 € pro Spiel."},{"t":"Wie groß ist P(mindestens eine 6) beim zweimaligen Würfeln?","l":"P(keine 6) = 5/6 × 5/6 = 25/36\\nP(mindestens eine 6) = 1 - 25/36 = 11/36 \\u2248 30,6%"},{"t":"Klasse: 60% Mädchen. 40% der Mädchen tragen eine Brille.\\nEin Mädchen wird gewählt: P(Brille) = ?","l":"P(Brille) = P(Mädchen) × P(Brille|Mädchen)\\n= 0,6 × 0,4 = 0,24 = 24%"},{"t":"Baumdiagramm: Münze, dann Würfel.\\nP(Kopf UND Zahl > 4) = ?","l":"P(Kopf) = 1/2\\nP(Zahl > 4) = 2/6 = 1/3\\nP(Kopf UND Zahl > 4) = 1/2 × 1/3 = 1/6"},{"t":"5 Kugeln: 2 schwarz, 3 weiß. Ohne Zurücklegen 2 ziehen.\\nP(1 schwarz, 1 weiß) = ?","l":"Möglichkeit 1: sw,we: 2/5 × 3/4 = 6/20\\nMöglichkeit 2: we,sw: 3/5 × 2/4 = 6/20\\nP = 6/20 + 6/20 = 12/20 = 60%"},{"t":"Ein Test hat 4 Fragen mit je 4 Antwortmöglichkeiten (1 richtig).\\nP(alle 4 richtig durch Raten) = ?","l":"P(eine richtig) = 1/4\\nP(alle 4 richtig) = (1/4)\\u2074 = 1/256 \\u2248 0,39%"},{"t":"Lotto 6 aus 49. P(genau 0 Richtige) beschreiben (kein Rechnen).","l":"Man müsste C(43,6) ÷ C(49,6) berechnen.\\nC(49,6) = 13.983.816 mögliche Kombinationen.\\nDie Wahrscheinlichkeit ist sehr hoch (ca. 43,6%)."},{"t":"Ein Schütze trifft mit P=0,8. Er schießt 2-mal.\\nP(beide Male treffen) = ?","l":"P(beide treffen) = 0,8 × 0,8 = 0,64 = 64%\\n(unabhängige Ereignisse)"},{"t":"Zwei Würfel, P(Augensumme \\u2265 10) = ?","l":"Günstige Paare: (4,6),(5,5),(5,6),(6,4),(6,5),(6,6) = 6\\nP = 6/36 = 1/6 \\u2248 16,7%"},{"t":"Urne: 2 rote, 3 blaue, 5 grüne Kugeln.\\nP(keine rote bei 2 Zügen mit Zurücklegen) = ?","l":"P(nicht rot) = 8/10 = 0,8\\nP(keine rote in 2 Zügen) = 0,8\\u00b2 = 0,64 = 64%"},{"t":"Eine Klasse hat 30 Schüler: 18 Sport, 12 Musik.\\nEin Schüler wird gewählt. P(Sport) = ?","l":"P(Sport) = 18/30 = 3/5 = 60%\\nP(Musik) = 12/30 = 2/5 = 40%"},{"t":"Münze 4-mal werfen. P(mindestens 1 Kopf) = ?","l":"P(kein Kopf) = (1/2)\\u2074 = 1/16\\nP(mindestens 1 Kopf) = 1 - 1/16 = 15/16 = 93,75%"},{"t":"P(A)=0,3, P(B)=0,5, A und B unabhängig.\\nP(A und B) = ?","l":"P(A und B) = P(A) × P(B) = 0,3 × 0,5 = 0,15"},{"t":"Würfelspiel: Bei 6 gewinnt man 5 €, sonst verliert man 1 €.\\nIst das Spiel fair?","l":"E = 1/6 × 5 + 5/6 × (-1) = 5/6 - 5/6 = 0 €\\nJa, das Spiel ist fair (Erwartungswert = 0)."},{"t":"3 Kugeln: rot, blau, grün. Wie viele Anordnungen gibt es?","l":"3! = 3 × 2 × 1 = 6 Anordnungen"},{"t":"Zufallsexperiment: Würfeln. Ereignis A: Zahl > 3. B: gerade Zahl.\\nSind A und B unabhängig?","l":"P(A) = 3/6 = 1/2, P(B) = 3/6 = 1/2\\nP(A \\u2229 B) = P(4 oder 6) = 2/6 = 1/3\\nP(A)×P(B) = 1/4 \\u2260 1/3 → NICHT unabhängig"}],"Funktionen":[{"t":"Lineare Funktion durch P\\u2081(0|2) und P\\u2082(3|8).\\nBestimme f(x).","l":"m = (8-2)÷(3-0) = 2\\nb = 2 (aus P\\u2081)\\nf(x) = 2x + 2"},{"t":"Bestimme den Scheitelpunkt von:\\nf(x) = x\\u00b2 - 4x + 3","l":"xS = -(-4)÷(2×1) = 2\\nyS = f(2) = 4 - 8 + 3 = -1\\nS(2 | -1)"},{"t":"Bestimme die Nullstellen von:\\nf(x) = x\\u00b2 - 9","l":"x\\u00b2 = 9 → x\\u2081=3, x\\u2082=-3"},{"t":"Bakterien wachsen exponentiell. Start: 100, nach 1 h: 200.\\nWie viele nach 5 h?","l":"b = 2 (Wachstumsfaktor)\\nf(5) = 100 × 2\\u2075 = 3200"},{"t":"Schnittpunkt von f(x)=2x+1 und g(x)=-x+7?","l":"2x+1 = -x+7 → 3x=6 → x=2\\ny = f(2) = 5\\nS(2|5)"},{"t":"Bestimme die Nullstellen von:\\nf(x) = x\\u00b2 + 2x - 8","l":"p=2, q=-8\\nx = -1 \\u00b1 \\u221a(1+8) = -1 \\u00b1 3\\nx\\u2081=2, x\\u2082=-4"},{"t":"Welcher Punkt liegt auf f(x) = 3x - 2?\\nA(2|4), B(3|7), C(1|1)","l":"f(2) = 4 ✓ → A liegt drauf\\nf(3) = 7 ✓ → B liegt drauf\\nf(1) = 1 ✓ → C liegt drauf\\nAlle drei Punkte liegen auf der Geraden!"},{"t":"Bestimme die Funktionsgleichung der Geraden durch:\\nP\\u2081(1|3) und P\\u2082(4|9)","l":"m = (9-3)÷(4-1) = 2\\nf(x) = 2x + b → 3 = 2 + b → b=1\\nf(x) = 2x + 1"},{"t":"Ein Betrag von 1000 € wird mit 5% pro Jahr angelegt.\\nWie viel ist es nach 10 Jahren?","l":"f(t) = 1000 × 1,05^t\\nf(10) = 1000 × 1,05\\u00b9\\u2070 \\u2248 1628,89 €"},{"t":"Eine Parabel hat Scheitel S(2|-3) und führt durch P(0|1).\\nBestimme a in f(x)=a(x-2)\\u00b2-3","l":"P(0|1) einsetzen: 1 = a(0-2)\\u00b2 - 3\\n1 = 4a - 3 → 4a = 4 → a = 1\\nf(x) = (x-2)\\u00b2 - 3"},{"t":"Wann sind zwei lineare Funktionen parallel?","l":"Zwei Geraden f(x)=m\\u2081x+b\\u2081 und g(x)=m\\u2082x+b\\u2082 sind parallel,\\nwenn m\\u2081=m\\u2082 (gleiche Steigung) und b\\u2081\\u2260b\\u2082."},{"t":"Bestimme den y-Achsenabschnitt und die Nullstelle von:\\nf(x) = 4x - 8","l":"y-Achsenabschnitt: x=0 → f(0) = -8 → P(0|-8)\\nNullstelle: 4x-8=0 → x=2 → N(2|0)"},{"t":"Eine Radioaktivität sinkt jährlich um 10%.\\nStartwert: 500. Nach 5 Jahren = ?","l":"f(t) = 500 × 0,9^t\\nf(5) = 500 × 0,9\\u2075 \\u2248 295,25"},{"t":"Bestimme die Schnittpunkte mit den Achsen:\\nf(x) = x\\u00b2 - 4x","l":"y-Achse: f(0) = 0 → S_y(0|0)\\nNullstellen: x\\u00b2-4x=0 → x(x-4)=0\\nx\\u2081=0, x\\u2082=4"},{"t":"Für welches x gilt f(x) > 0 wenn f(x) = x - 3?","l":"x - 3 > 0 → x > 3\\nDie Funktion ist positiv für alle x > 3."},{"t":"Bestimme Steigung und y-Achsenabschnitt:\\ny = -2x + 7","l":"m = -2 (Steigung: fällt)\\nb = 7 (y-Achsenabschnitt)"},{"t":"Eine Parabel f(x) = x\\u00b2 - 2x - 3. Bestimme alle Nullstellen.","l":"pq-Formel: p=-2, q=-3\\nx = 1 \\u00b1 \\u221a(1+3) = 1 \\u00b1 2\\nx\\u2081=3, x\\u2082=-1"},{"t":"Wie heißt die Normalparabel und wie sieht sie aus?","l":"f(x) = x\\u00b2\\nScheitel bei (0|0), öffnet nach oben, symmetrisch zur y-Achse.\\nVerläuft durch (-1|1), (1|1), (-2|4), (2|4)"},{"t":"Bestimme die Wertemenge von f(x) = x\\u00b2.","l":"Da x\\u00b2 \\u2265 0 für alle x, ist die Wertemenge:\\nW = [0; +\\u221e) also alle nicht-negativen reellen Zahlen."},{"t":"f(x) = -x\\u00b2 + 4. Wo hat die Parabel ihr Maximum?","l":"xS = 0 (da b=0 in f(x)=-x\\u00b2+4)\\nyS = f(0) = 4\\nMaximum bei S(0|4) (da a=-1<0 → nach unten)"},{"t":"Bestimme den Scheitelpunkt von:\\nf(x) = 2x\\u00b2 - 8x + 6","l":"xS = -(-8)÷(2×2) = 8÷4 = 2\\nyS = 2×4 - 16 + 6 = -2\\nS(2|-2)"},{"t":"Eine Gerade hat m=3 und geht durch P(2|8).\\nBestimme die Funktionsgleichung.","l":"f(x) = 3x + b\\n8 = 3×2 + b → b = 2\\nf(x) = 3x + 2"},{"t":"Was sind die Koordinaten des Scheitelpunkts von f(x)=x\\u00b2-6x+10?","l":"xS = 6÷2 = 3\\nyS = 9 - 18 + 10 = 1\\nS(3|1)"},{"t":"f(x) = 2x + 3 und g(x) = 2x - 1. Haben diese Geraden einen Schnittpunkt?","l":"Beide haben m=2 → sie sind parallel.\\nParallele Geraden haben keinen Schnittpunkt (b\\u2081\\u2260b\\u2082)."},{"t":"Ein Wert verdoppelt sich alle 3 Jahre. Start: 50.\\nBestimme die Funktion und den Wert nach 9 Jahren.","l":"f(t) = 50 × 2^(t/3)\\nf(9) = 50 × 2\\u00b3 = 50 × 8 = 400"}]},"deutsch":{"Erörterung":[{"t":"Schreibe eine Einleitung für eine Erörterung:\\n\\nSollten Handys in der Schule verboten werden?","l":"Muster-Einleitung:\\nKaum ein Schüler verlässt heute das Haus ohne sein Smartphone. Was in der Freizeit selbstverständlich ist, löst im Schulalltag Diskussionen aus: Sollten Handys im Unterricht verboten werden? Diese Frage beschäftigt Lehrer, Eltern und Schüler gleichermaßen."},{"t":"Nenne 3 Pro-Argumente für Schuluniformen.\\nFormuliere als vollständige Sätze mit Beispiel.","l":"1. Schuluniformen reduzieren soziale Ungleichheiten, da äußerliche Unterschiede im Kleidungsstil wegfallen.\\n2. Sie sparen Zeit und Geld, da man morgens nicht überlegen muss, was man anzieht.\\n3. Sie fördern das Gemeinschaftsgefühl, da alle Schüler als Teil einer Gruppe erkennbar sind."},{"t":"Schreibe einen Schlussabsatz zur Frage:\\nSollte der ÖPNV kostenlos sein?","l":"Aufbau: Zusammenfassung + begründete eigene Meinung\\n\\nZusammenfassend lässt sich sagen, dass ein kostenloser ÖPNV Vor- und Nachteile hat. Angesichts des Klimawandels halte ich kostenlose Busse und Bahnen für sinnvoll, da sie mehr Menschen zur Nutzung des öffentlichen Verkehrs motivieren würden."},{"t":"Was ist der Unterschied zwischen einem Argument und einem Beispiel?\\nGib jeweils ein Beispiel.","l":"ARGUMENT: Eine begründete Behauptung.\\nBEISPIEL: Belegt das Argument mit einem konkreten Fall.\\n\\nArgument: Sport ist gesund, weil er das Herz-Kreislauf-System stärkt.\\nBeispiel: Studien zeigen, dass schon 30 Minuten Joggen das Herzinfarktrisiko senken."},{"t":"Nenne 3 Contra-Argumente gegen Schuluniformen.","l":"1. Schuluniformen schränken die Individualität ein, da Kleidung ein wichtiges Ausdrucksmittel ist.\\n2. Die Anschaffungskosten sind zusätzliche Ausgaben für Familien.\\n3. Uniformen lösen keine tiefer liegenden sozialen Probleme, sie überdecken sie nur."},{"t":"Erkläre das Prinzip des stärksten Arguments zuletzt.","l":"In einer Erörterung werden die Argumente nach Stärke geordnet.\\nDas stärkste Argument kommt zuletzt, weil es beim Leser am längsten im Gedächtnis bleibt (Klimax-Prinzip). Schwache Argumente können am Anfang stehen."},{"t":"Schreibe eine Überleitung vom Hauptteil zum Schluss.","l":"Mögliche Übergänge:\\n- Abschließend lässt sich sagen, dass...\\n- Alles in allem bin ich der Meinung, dass...\\n- Nach Abwägung aller Argumente komme ich zu dem Schluss, dass..."},{"t":"Welche Verbindungsworte nutzt man in einer Erörterung?\\nNenne 5 mit Funktion.","l":"1. Zum einen... (erstes Argument einleiten)\\n2. Außerdem / Darüber hinaus (weiteres Argument)\\n3. Allerdings / Dennoch (Gegenargument einleiten)\\n4. Deshalb / Daher (Schlussfolgerung)\\n5. Abschließend / Zusammenfassend (Fazit einleiten)"},{"t":"Was ist der Unterschied zwischen einer dialektischen und einer linearen Erörterung?","l":"LINEARE Erörterung: Argumente nur für eine Seite, eigene Meinung wird vertreten.\\n\\nDIALEKTISCHE Erörterung: Argumente für BEIDE Seiten (Pro und Contra) werden vorgestellt. Im Schluss dann eine begründete Entscheidung."},{"t":"Formuliere ein Gegenargument zu: Soziale Medien sind schädlich für Jugendliche.","l":"Allerdings sollte man bedenken, dass soziale Medien Jugendlichen auch ermöglichen, kreative Projekte zu teilen und sich mit Gleichgesinnten zu vernetzen. So bilden sich Online-Gemeinschaften, die im Alltag schwer zu finden wären."},{"t":"Schreibe eine Einleitung zum Thema:\\nIst vegane Ernährung für alle sinnvoll?","l":"In den letzten Jahren ist vegane Ernährung immer beliebter geworden. Immer mehr Menschen verzichten aus ethischen, ökologischen oder gesundheitlichen Gründen auf tierische Produkte. Doch ist diese Ernährungsform wirklich für jeden geeignet?"},{"t":"Was macht ein gutes Argument aus? Nenne 3 Merkmale.","l":"1. Es ist begründet und nachvollziehbar.\\n2. Es wird durch ein konkretes Beispiel oder Faktum belegt.\\n3. Es ist relevant für die These und nicht abschweifen."},{"t":"Erkläre den Aufbau einer Erörterung mit Abkürzung THESE-ARGUMENT-BEISPIEL-FAZIT.","l":"THESE: Behauptung aufstellen\\nARGUMENT: Warum gilt die These?\\nBEISPIEL: Konkreter Beleg aus Alltag / Statistik / Literatur\\nFAZIT: Kurze Schlussfolgerung des Abschnitts\\n\\nDieses Muster wird für jeden Absatz im Hauptteil wiederholt."},{"t":"Nenne 3 Pro-Argumente für mehr Sportunterricht in der Schule.","l":"1. Mehr Sport verbessert die Konzentrationsfähigkeit, da Bewegung den Blutfluss ins Gehirn fördert.\\n2. Regelmäßiger Sport beugt Übergewicht und Haltungsschäden vor.\\n3. Mannschaftssport fördert soziale Kompetenzen wie Teamarbeit und Fairplay."},{"t":"Was sollte in einer Erörterungs-Einleitung stehen?","l":"1. Ein aufmerksamkeitsstarker Einstieg (Zitat, Frage, aktuelles Ereignis)\\n2. Hinführung zum Thema\\n3. Vorstellung der zentralen Frage oder These\\n\\nKEINE Argumente in der Einleitung!"},{"t":"Schreibe ein Argument gegen Hausaufgaben mit Beispiel.","l":"Argument: Hausaufgaben vergrößern die Schere zwischen Schülern, da nicht alle zuhause gleich gute Unterstützung haben.\\nBeispiel: Kinder aus bildungsfernen Familien können kaum Hilfe erwarten, während andere von Nachhilfe profitieren."},{"t":"Wie leitet man einen Gegenargument-Absatz ein?","l":"Einleitungsformulierungen:\\n- Allerdings sollte man beachten, dass...\\n- Kritiker hingegen verweisen darauf, dass...\\n- Auf der anderen Seite lässt sich einwenden, dass...\\n- Es wäre jedoch falsch zu behaupten, dass..."},{"t":"Erörterung zum Thema Klimaschutz: Formuliere 2 Pro- und 1 Contra-Argument.","l":"Pro 1: Maßnahmen wie erneuerbare Energien reduzieren CO2-Emissionen messbar.\\nPro 2: Klimaschutz schafft Arbeitsplätze in Zukunftsbranchen.\\nContra: Strenge Auflagen können wirtschaftliches Wachstum bremsen und Arbeitsplätze in klassischen Industrien kosten."},{"t":"Was ist eine These in einer Erörterung?","l":"Eine These ist eine klar formulierte Behauptung oder Meinung, die man in der Erörterung vertreten oder diskutieren möchte.\\nSie steht meist am Anfang und wird im Hauptteil durch Argumente belegt oder widerlegt.\\nBeispiel: Schuluniformen sollten eingeführt werden, weil sie soziale Ungleichheiten reduzieren."},{"t":"Formuliere einen vollständigen Argumentationsabsatz:\\nThema: Digitales Lernen in der Schule","l":"These: Digitales Lernen fördert die Medienkompetenz von Schülern.\\nArgument: Im Berufsalltag sind digitale Fähigkeiten unverzichtbar, daher sollten Schüler sie früh üben.\\nBeispiel: Studien zeigen, dass Unternehmen gezielt nach Bewerber suchen, die sicher mit digitalen Tools umgehen können.\\nFazit: Digitales Lernen bereitet Schüler damit auf den modernen Arbeitsmarkt vor."},{"t":"Nenne 4 häufige Fehler in Erörterungen.","l":"1. Keine Beispiele für die Argumente\\n2. Eigene Meinung bereits in der Einleitung statt erst im Schluss\\n3. Argumente ohne logische Verbindung\\n4. Kein klares Fazit im Schluss"},{"t":"Schreibe eine Einleitung zum Thema:\\nSollte das Mindestalter für Führerschein auf 18 bleiben?","l":"In Deutschland ist der Erwerb eines Führerscheins in der Regel erst ab 18 Jahren möglich. Mit der Einführung von Begleitetem Fahren ab 17 gibt es bereits Ausnahmen. Doch sollte das Mindestalter für das selbstständige Fahren gesenkt oder angehoben werden?"},{"t":"Was unterscheidet eine Meinungsäußerung von einem Argument?","l":"MEINUNGSÄUSSERUNG: subjektive Aussage ohne Begründung\\n→ Ich finde, Hausaufgaben sind unnötig.\\n\\nARGUMENT: Meinung + Begründung + Beleg\\n→ Hausaufgaben sollten abgeschafft werden, weil sie soziale Ungleichheit fördern. So zeigt eine Studie, dass Schüler ohne häusliche Unterstützung schlechtere Hausaufgaben abliefern."},{"t":"Nenne 3 Argumente für mehr Digitalisierung an Schulen.","l":"1. Digitale Medien motivieren Schüler und machen Lerninhalte abwechslungsreicher.\\n2. Tablets und Laptops ersetzen schwere Schulbücher und reduzieren den Rücken.\\n3. Schüler bereiten sich auf eine zunehmend digitale Arbeitswelt vor."},{"t":"Erkläre, warum Argumente geordnet werden sollten.","l":"Eine Ordnung der Argumente macht die Erörterung überzeugender und leichter lesbar.\\nMögliche Ordnungsprinzipien:\\n- Vom schwächsten zum stärksten Argument (klimaktische Steigerung)\\n- Zuerst Pro, dann Contra (oder umgekehrt)\\n- Nach Themenfeldern (wirtschaftlich, sozial, ökologisch)"}],"Textanalyse":[{"t":"Was ist der Unterschied zwischen Metapher und Vergleich? Gib je ein Beispiel.","l":"METAPHER: Direktes Bild ohne wie\\n→ Das Leben ist ein Traum.\\n\\nVERGLEICH: Verbindung mit wie\\n→ Das Leben ist wie ein Traum.\\n\\nDie Metapher wirkt intensiver und knapper."},{"t":"Analysiere: Milch macht müde Männer munter.","l":"ALLITERATION: M - M - M - M (gleicher Anlaut)\\nPERSONIFIKATION implizit (Milch als handelndes Subjekt)\\nWirkung: einprägsam, rhythmisch, gut für Werbung"},{"t":"Nenne alle 4 Erzählperspektiven mit Erklärung.","l":"1. ICH-ERZÄHLER: erzählt in 1. Person, nur eigene Gedanken bekannt\\n2. AUKTORIALER ERZÄHLER: allwissend, kennt alle Gedanken\\n3. PERSONALER ERZÄHLER: 3. Person, aber aus Sicht einer Figur\\n4. NEUTRALER ERZÄHLER: nur beobachtbar, keine Innensicht"},{"t":"Bestimme das Reimschema:\\nIm Frühling blüht die Welt (a)\\nIn Farben wunderschön (b)\\nDas Licht, das alles hält (a)\\nBleibst du und kannst dich drehn (b)","l":"Reimschema: abab → KREUZREIM\\nVers 1 reimt mit Vers 3 (Welt - hält)\\nVers 2 reimt mit Vers 4 (schön - drehn)"},{"t":"Schreibe eine Einleitung für eine Analyse von:\\nDer Tunnel von Friedrich Dürrenmatt (1952)","l":"In der Kurzgeschichte Der Tunnel von Friedrich Dürrenmatt, erschienen 1952, wird ein junger Student beschrieben, der in einem Zug sitzt und bemerkt, dass dieser in einen immer länger werdenden Tunnel fährt. Der Text kann als Parabel auf die Hilflosigkeit des modernen Menschen gedeutet werden."},{"t":"Was ist eine Alliteration? Gib 2 Beispiele.","l":"Eine Alliteration ist die Wiederholung des gleichen Anlautkonsonanten in aufeinanderfolgenden Wörtern.\\n\\nBeispiele:\\n- Mit Milch macht man müde Männer munter.\\n- Über Stock und Stein stampfte der Stier.\\n\\nWirkung: Rhythmus, Einprägsamkeit, Klang"},{"t":"Erkläre die Wirkung einer Anapher an einem Beispiel.","l":"Eine Anapher ist die Wiederholung eines Wortes oder Ausdrucks am Satzanfang.\\n\\nBeispiel: Ich fordere Gerechtigkeit. Ich fordere Freiheit. Ich fordere Würde.\\n\\nWirkung: Eindringlichkeit, Betonung, Rhythmus, emotionale Verstärkung"},{"t":"Was ist eine Klimax? Wie unterscheidet sie sich von der Antiklimax?","l":"KLIMAX: aufsteigende Steigerung\\n→ Er kam, sah und siegte.\\n\\nANTIKLIMAX: absteigende Folge\\n→ Wir kämpften, litten und gaben auf.\\n\\nKlimax erzeugt Spannung, Antiklimax Ernüchterung oder Ironie."},{"t":"Nenne 3 Merkmale einer Kurzgeschichte.","l":"1. Handlung beginnt in medias res (mitten im Geschehen)\\n2. Kein ausführlicher Schluss - oft offenes Ende\\n3. Wenige Figuren, kurze Zeitspanne\\n4. Konzentration auf einen zentralen Konflikt\\n5. Sprache ist knapp und verdichtet"},{"t":"Was ist Ironie in der Literatur? Gib ein Beispiel.","l":"Ironie bedeutet, das Gegenteil von dem zu sagen, was gemeint ist.\\nDer Kontext macht die eigentliche Bedeutung deutlich.\\n\\nBeispiel: Das hast du ja wieder toll gemacht!\\n(wenn tatsächlich etwas misslungen ist)\\n\\nWirkung: Distanz, Kritik, Humor, Überlegenheit"},{"t":"Analysiere folgendes Stilmittel:\\nDie Sterne flüsterten ihm Geheimnisse zu.","l":"PERSONIFIKATION: Sterne werden vermenschlicht (flüstern)\\nMetapher steckt drin: Sternenlichter als Geheimnisträger\\n\\nWirkung: Atmosphäre, Mystik, Lebendigkeit"},{"t":"Was ist der Unterschied zwischen Inhaltsangabe und Analyse?","l":"INHALTSANGABE: Was passiert? Handlung neutral im Präsens nacherzählen. Keine eigene Meinung.\\n\\nANALYSE: Wie ist es gemacht? Stilmittel, Sprache, Aufbau, Erzählperspektive untersuchen und deren Wirkung erklären."},{"t":"Schreibe eine Analyse-Formulierung für ein Stilmittel deiner Wahl.","l":"Muster-Formulierungen:\\n- Der Autor verwendet [Stilmittel], um [Wirkung] zu verdeutlichen.\\n- Durch den Einsatz von [Stilmittel] wird [Stimmung/Aussage] beim Leser hervorgerufen.\\n- [Stilmittel] an dieser Stelle verdeutlicht [Absicht des Autors]."},{"t":"Erkläre: Was ist ein Symbol in der Literatur? Beispiel.","l":"Ein Symbol ist ein Objekt oder Bild, das für eine übergeordnete Idee oder Bedeutung steht.\\n\\nBeispiele:\\n- Taube = Frieden\\n- Sturm = innerer Konflikt\\n- Licht = Hoffnung / Erkenntnis\\n- Dunkelheit = Ungewissheit / Tod"},{"t":"Was versteht man unter dem Begriff offenes Ende in einer Kurzgeschichte?","l":"Ein offenes Ende bedeutet, dass die Geschichte keine abschließende Lösung bietet. Der Leser weiß nicht, wie es weitergeht.\\n\\nWirkung: Der Leser wird zum Nachdenken angeregt und muss selbst interpretieren.\\nTypisch für moderne Kurzgeschichten (z.B. Borchert, Böll)."},{"t":"Erkläre den Begriff Erzähltempo.","l":"Das Erzähltempo beschreibt, wie schnell oder langsam eine Geschichte voranschreitet.\\n\\nLangsames Tempo: Viele Details, Dialoge, innere Gedanken\\n→ erzeugt Spannung, Tiefe\\n\\nSchnelles Tempo: Knappe Sätze, Zeitsprünge, wenig Beschreibung\\n→ erzeugt Dynamik, Dramatik"},{"t":"Was ist eine Ellipse? Gib ein Beispiel und erkläre die Wirkung.","l":"Eine Ellipse ist ein unvollständiger Satz, dem ein syntaktisch notwendiges Element fehlt.\\n\\nBeispiel: Er kam. Sah. Schwieg.\\noder: Kein Kommentar.\\n\\nWirkung: Kürze, Dramatik, Abgehacktheit betont Gefühle oder Schnelligkeit"},{"t":"Was ist der Unterschied zwischen direkter und indirekter Charakterisierung?","l":"DIREKTE Charakterisierung: Der Erzähler beschreibt eine Figur ausdrücklich.\\n→ Sie war mutig und entschlossen.\\n\\nINDIREKTE Charakterisierung: Der Charakter zeigt sich durch Handlungen, Aussagen, Reaktionen anderer.\\n→ Sie trat allein vor die Menge."},{"t":"Nenne die Merkmale einer Parabel.","l":"1. Kurze Geschichte mit übertragener Bedeutung\\n2. Einfache, exemplarische Handlung\\n3. Enthält eine Moral oder Lehre\\n4. Figuren sind Typen, keine Individuen\\n5. Wird explizit oder implizit gedeutet\\n\\nBeispiele: Gleichnisse aus der Bibel, Kafkas Vor dem Gesetz"},{"t":"Erkläre die Begriffe Innen- und Außenperspektive.","l":"AUSSENPERSPEKTIVE: Der Erzähler schildert nur äußere Handlungen und Ereignisse - keine Einblicke in Gedanken oder Gefühle.\\n\\nINNENPERSPEKTIVE: Der Erzähler hat Zugang zu den Gedanken und Gefühlen einer oder mehrerer Figuren.\\n\\nDie Perspektive beeinflusst Nähe und Empathie des Lesers."},{"t":"Was ist ein Leitmotiv? Gib ein Beispiel.","l":"Ein Leitmotiv ist ein wiederkehrendes Symbol, Bild oder Thema, das einen Text durchzieht und seine Bedeutung verstärkt.\\n\\nBeispiel: In Thomas Manns Buddenbrooks sind Verfall und Musik Leitmotive.\\nIn Kafkas Werken sind Türen und Schwellen Leitmotive (Ausgrenzung, Übergang)."},{"t":"Analysiere den folgenden Satz auf Stilmittel:\\nDer Tod schritt leise durch die Gassen.","l":"PERSONIFIKATION: Der Tod wird als Person dargestellt (schritt, leise)\\nMETAPHER: Tod als wandernde Gestalt\\nAtmosphäre: dunkel, unausweichlich, geheimnisvoll\\nWirkung: Bedrohlichkeit, das Unabwendbare des Todes wird vermenschlicht"},{"t":"Was ist Sprachebene und warum ist sie für die Analyse wichtig?","l":"Die Sprachebene beschreibt den Stil und das Register der Sprache:\\n- Gehoben / literarisch (Lyrik, Prosa)\\n- Umgangssprache / Dialekt (Alltagsgespräche)\\n- Fachsprache (Wissenschaft)\\n\\nFür die Analyse wichtig: Die Sprachebene gibt Aufschluss über Figuren, soziales Milieu, Epoche."},{"t":"Was versteht man unter dem Begriff Atmosphäre in einem Text?","l":"Die Atmosphäre ist die emotionale Grundstimmung eines Textes.\\n\\nSie entsteht durch:\\n- Wahl der Wörter (positiv/negativ besetzt)\\n- Beschreibungen von Wetter, Ort, Licht\\n- Satzbau (kurz = angespannt, lang = ruhig)\\n- Stilmittel\\n\\nBeispiel: Nebel, Kälte, Stille = bedrückende Atmosphäre"},{"t":"Erkläre den Begriff Verfremdungseffekt.","l":"Der Verfremdungseffekt (V-Effekt) stammt von Bertolt Brecht.\\nZuschauer / Leser sollen nicht emotional mitreißen, sondern nachdenken und kritisch urteilen.\\n\\nTechniken: direkte Ansprache des Publikums, Einschübe, Zeitsprünge, Plakate.\\n\\nZiel: Kritisches Denken statt Einfühlung."}],"Grammatik":[{"t":"Bestimme die Satzglieder:\\nDer fleißige Schüler lernte gestern in der Bibliothek.","l":"Der fleißige Schüler → SUBJEKT (Wer?)\\nlernte → PRÄDIKAT\\ngestern → Adverbiale der Zeit (Wann?)\\nin der Bibliothek → Adverbiale des Ortes (Wo?)"},{"t":"Bilde das Passiv:\\nDer Lehrer korrigiert die Hefte.","l":"Passiv Präsens: Die Hefte werden (vom Lehrer) korrigiert.\\nPassiv Vergangenheit: Die Hefte wurden korrigiert."},{"t":"Wo fehlt ein Komma? Begründe:\\nEr sagte er werde morgen kommen.","l":"Korrekt: Er sagte, er werde morgen kommen.\\nKomma nach sagte, weil ein Nebensatz (indirekte Rede) folgt."},{"t":"Bilde den Konjunktiv II:\\nIch habe keine Zeit.","l":"Wenn ich Zeit hätte, würde ich dir helfen.\\noder: Hätte ich Zeit, so käme ich."},{"t":"Erkläre den Unterschied zwischen Dativ und Akkusativobjekt.","l":"AKKUSATIVOBJEKT: Wen oder was? (4. Fall)\\n→ Der Lehrer lobt den Schüler. (wen? = den Schüler)\\n\\nDATIVOBJEKT: Wem? (3. Fall)\\n→ Er hilft dem Schüler. (wem? = dem Schüler)"},{"t":"Was ist ein Relativsatz? Gib ein Beispiel.","l":"Ein Relativsatz ist ein Nebensatz, der ein Nomen näher beschreibt.\\nEr wird durch ein Relativpronomen eingeleitet (der, die, das, welcher...).\\n\\nBeispiel: Der Schüler, der immer früh kommt, bekommt Lob."},{"t":"Bestimme die Wortarten in folgendem Satz:\\nDie kleine Katze schläft tief auf dem warmen Sofa.","l":"Die → Artikel\\nkleine → Adjektiv\\nKatze → Nomen\\nschläft → Verb\\ntief → Adverb\\nauf → Präposition\\ndem → Artikel\\nwarmen → Adjektiv\\nSofa → Nomen"},{"t":"Was ist ein Nebensatz? Woran erkennt man ihn?","l":"Ein Nebensatz ist ein abhängiger Teilsatz, der nicht allein stehen kann.\\nMerkmale:\\n- Wird durch eine Konjunktion eingeleitet (weil, dass, wenn, obwohl...)\\n- Das konjugierte Verb steht am Ende\\n→ ...weil es regnete. (Verb regnete am Ende)"},{"t":"Erkläre den Unterschied zwischen Konjunktion und Subjunktion.","l":"KONJUNKTION (nebenordnend): verbindet gleichrangige Sätze\\n→ und, oder, aber, denn, doch\\nKein Einfluss auf die Wortstellung.\\n\\nSUBJUNKTION (unterordnend): leitet Nebensätze ein\\n→ weil, obwohl, dass, wenn\\nVerb geht ans Ende des Nebensatzes."},{"t":"Bilde Sätze im Passiv für diese Zeiten:\\n1. Präsens 2. Imperfekt 3. Futur","l":"Aktiv: Der Arzt behandelt den Patienten.\\n1. Präsens: Der Patient wird behandelt.\\n2. Imperfekt: Der Patient wurde behandelt.\\n3. Futur: Der Patient wird behandelt werden."},{"t":"Was ist ein erweiterter Infinitiv? Wann setzt man ein Komma?","l":"Ein erweiterter Infinitiv ist eine Infinitivgruppe mit zu, die durch andere Wörter erweitert ist.\\nKomma ist nötig, wenn er von einem Verb wie bitten, hoffen, versprechen abhängig ist.\\n→ Er bat mich, ihm zu helfen.\\n→ Ich hoffe, bald fertig zu sein."},{"t":"Erkläre die Funktion von weil, obwohl und damit als Konjunktionen.","l":"WEIL: Gibt den Grund an (Kausalangabe)\\n→ Sie blieb zu Hause, weil sie krank war.\\n\\nOBWOHL: Gibt einen Widerspruch an (Konzessiv)\\n→ Obwohl es regnete, gingen wir spazieren.\\n\\nDAMIT: Gibt den Zweck an (Final)\\n→ Er lernte viel, damit er besteht."},{"t":"Was ist ein Appositionssatz? Gib ein Beispiel.","l":"Eine Apposition ist eine nachgestellte Erklärung oder Ergänzung zu einem Nomen, meist mit Komma abgetrennt.\\n\\nBeispiel: Frau Müller, unsere Sportlehrerin, kommt gleich.\\nDie Apposition unsere Sportlehrerin ergänzt Frau Müller."},{"t":"Bilde die Steigerungsformen:\\ngut - schlecht - viel - wenig","l":"gut → besser → am besten\\nschlecht → schlechter → am schlechtesten\\nviel → mehr → am meisten\\nwenig → weniger → am wenigsten\\n(alles unregelmäßige Steigerungen!)"},{"t":"Was ist der Unterschied zwischen Aktiv und Vorgangspassiv?","l":"AKTIV: Das Subjekt handelt selbst.\\n→ Der Mechaniker repariert das Auto.\\n\\nVORGANGSPASSIV: Die Handlung steht im Vordergrund, nicht der Handelnde.\\n→ Das Auto wird repariert.\\n\\nZUSTANDSPASSIV: Ein Zustand als Ergebnis wird beschrieben.\\n→ Das Auto ist repariert."},{"t":"Was sind Modalverben? Nenne alle 6.","l":"Modalverben drücken eine Möglichkeit, Notwendigkeit oder Erlaubnis aus:\\n1. dürfen (Erlaubnis)\\n2. können (Möglichkeit/Fähigkeit)\\n3. mögen (Vorliebe)\\n4. müssen (Notwendigkeit)\\n5. sollen (Auftrag)\\n6. wollen (Absicht)\\n\\nSie stehen mit dem Infinitiv des Hauptverbs."},{"t":"Erkläre den Begriff Nominalisierung mit Beispiel.","l":"Nominalisierung bedeutet, ein Verb oder Adjektiv in ein Nomen umzuwandeln.\\n\\nBeispiele:\\n- laufen → das Laufen\\n- schön → die Schönheit\\n- entscheiden → die Entscheidung\\n\\nNominalisierungen werden großgeschrieben und haben einen Artikel."},{"t":"Was ist ein Adverbiale? Nenne 4 Arten mit Beispiel.","l":"1. Zeit (wann?): gestern, im Sommer, um 8 Uhr\\n2. Ort (wo/wohin?): in der Schule, nach Berlin\\n3. Art und Weise (wie?): schnell, mit Freude\\n4. Grund (warum?): wegen des Regens, aus Liebe"},{"t":"Bilde das Imperfekt (Präteritum) von:\\ngehen, haben, sein, machen","l":"gehen → ging\\nhaben → hatte\\nsein → war\\nmachen → machte\\n\\nImperfekt drückt abgeschlossene Handlungen in der Vergangenheit aus (typisch in der Erzählung)."},{"t":"Was ist ein Satzgefüge? Wie unterscheidet es sich von einer Satzreihe?","l":"SATZGEFÜGE: Hauptsatz + Nebensatz(Abhängigkeit)\\n→ Er lernte, weil die Prüfung nahte.\\n\\nSATZREIHE: Zwei Hauptsätze, nebengeordnet\\n→ Er lernte und die Prüfung nahte.\\n\\nSatzgefüge = Subordination (Unterordnung)\\nSatzreihe = Koordination (Gleichordnung)"},{"t":"Erkläre den Begriff Fremdwort vs. Lehnwort.","l":"LEHNWORT: Aus einer anderen Sprache übernommen, aber an die deutsche Aussprache angepasst.\\n→ Fenster (aus Latein: fenestra)\\n→ Streik (aus Englisch: strike)\\n\\nFREMDWORT: Behält die fremdsprachige Form/Aussprache.\\n→ Computer, Baby, Spaghetti"},{"t":"Was ist der Imperativ? Bilde Beispielsätze.","l":"Der Imperativ ist die Befehlsform eines Verbs.\\n\\nBilden:\\n- 2. Person Singular: Komm! (Stamm ohne Endung)\\n- 2. Person Plural: Kommt!\\n- Höflichkeitsform: Kommen Sie!\\n\\nBeispiele:\\n- Mach das Fenster zu!\\n- Geht nach Hause!"},{"t":"Was sind Indefinitpronomen? Nenne 5 Beispiele.","l":"Indefinitpronomen bezeichnen unbestimmte Personen oder Dinge:\\n1. man (jemand Unbekanntes)\\n2. jemand / niemand\\n3. etwas / nichts\\n4. alle / viele / einige\\n5. jeder / keiner\\n\\nBeispiel: Man sollte täglich lesen."},{"t":"Erkläre den Unterschied zwischen dem und den.","l":"DEM: Dativartikel (Wem?)\\n- maskulin/neutrum im Dativ\\n→ Er hilft dem Schüler. / Er gibt dem Kind.\\n\\nDEN: Akkusativartikel (Wen/Was?)\\n- maskulin im Akkusativ\\n- pluraler Dativartikel\\n→ Er lobt den Schüler. / Er hilft den Schülern."}]}}';
-
 var AUFGABEN_EN = '{"Zeitformen":[{"t":"Fill in: Simple Past or Present Perfect\\n\\n1. I _____ (never/be) to Australia.\\n2. She _____ (visit) Paris last summer.\\n3. We _____ (just/finish) our homework.\\n4. He _____ (lose) his keys yesterday.","l":"1. I have never been to Australia. (PP - no time given)\\n2. She visited Paris last summer. (SP - last summer)\\n3. We have just finished our homework. (PP - just)\\n4. He lost his keys yesterday. (SP - yesterday)"},{"t":"Correct the mistake:\\n\\n1. I have seen him yesterday.\\n2. She didn\'t went to school.\\n3. They are live in Berlin since 2010.","l":"1. I saw him yesterday. (SP wegen yesterday)\\n2. She didn\'t go to school. (nach did: Infinitiv)\\n3. They have lived in Berlin since 2010. (PP wegen since)"},{"t":"Will or going to?\\n\\n1. You plan to study medicine next year.\\n2. The phone rings - you offer to answer.\\n3. Look at those clouds - prediction!","l":"1. I am going to study medicine. (geplant)\\n2. I will answer it! (spontan)\\n3. It is going to rain. (Beweis sichtbar: Wolken)"},{"t":"Put verbs in correct tense:\\n\\nWhen I _____ (arrive), the train already _____ (leave).","l":"When I arrived, the train had already left.\\narrived = Simple Past\\nhad left = Past Perfect (lag vorher)"},{"t":"Fill in the correct form:\\n\\n1. She _____ (cook) dinner when I called.\\n2. They _____ (play) tennis every Saturday.\\n3. By next year, I _____ (finish) school.","l":"1. was cooking (Past Progressive)\\n2. play (Simple Present - habit)\\n3. will have finished (Future Perfect)"},{"t":"Translate into English using the correct tense:\\n\\n1. Ich habe ihn seit 3 Jahren nicht gesehen.\\n2. Sie lernten gestern Abend.\\n3. Wir werden morgen ankommen.","l":"1. I have not seen him for three years. (PP + for)\\n2. They studied yesterday evening. (SP)\\n3. We will arrive tomorrow. (will-future)"},{"t":"Choose the correct tense and explain:\\n\\nI _____ (work) here since 2020.","l":"I have worked here since 2020. (Present Perfect)\\nReason: since = PP signal word\\nThe action started in the past and continues now."},{"t":"Fill in: Simple Past or Past Progressive\\n\\n1. She _____ (sleep) when he _____ (arrive).\\n2. I _____ (read) while she _____ (watch) TV.","l":"1. was sleeping / arrived (Progressive = ongoing, SP = interruption)\\n2. was reading / was watching (beide liefen gleichzeitig)"},{"t":"When do you use Present Perfect Continuous?\\nGive 2 examples.","l":"Used for: actions that started in the past and are still continuing, OR to show how long something has been happening.\\nSignal words: for, since, all day, lately\\n\\nExamples:\\n- I have been studying for 3 hours.\\n- She has been living here since 2015."},{"t":"Translate and explain the tense:\\n\\nEr hat das Buch schon gelesen.","l":"He has already read the book.\\nTense: Present Perfect\\nReason: already = PP signal word\\nThe reading is finished, but relevant to the present."},{"t":"Fill in will, going to, or Present Progressive for future:\\n\\n1. The match _____ at 8pm. (fixed schedule)\\n2. I _____ (probably/rain) tomorrow.\\n3. I decided: I _____ (study) medicine.","l":"1. The match is at 8pm. / starts at 8pm. (Präsens für Fahrplan)\\n2. It will probably rain. (ungezielte Vorhersage)\\n3. I am going to study medicine. (bereits entschieden)"},{"t":"Erkläre Simple Past vs. Past Perfect anhand eines Beispiels.","l":"Simple Past: Handlung in der Vergangenheit\\nPast Perfect: Handlung liegt NOCH WEITER zurück\\n\\nBeispiel:\\nWhen I arrived at the cinema, the film had already started.\\narrived = SP (kam an)\\nhad started = PP (lief schon vorher)\\n→ Past Perfect zeigt die frühere Handlung an."},{"t":"Fill in the gaps:\\n\\nShe _____ (study) for 2 hours before she _____ (take) a break.","l":"She had studied for 2 hours before she took a break.\\nhad studied = Past Perfect (vorher)\\ntook = Simple Past (danach)"},{"t":"What is the difference between since and for?","l":"SINCE: used with a point in time\\n→ I have lived here since 2018.\\n→ She has been ill since Monday.\\n\\nFOR: used with a period of time\\n→ I have lived here for 5 years.\\n→ She has been ill for a week.\\n\\nBoth used with Present Perfect."},{"t":"Put the verbs in the correct tense:\\n\\nEvery morning she _____ (get up) at 7, _____ (have) breakfast and _____ (go) to school.","l":"Every morning she gets up at 7, has breakfast and goes to school.\\nAll Simple Present: habitual actions\\n(he/she/it: +s)"},{"t":"Correct and explain:\\n\\nI am knowing the answer.","l":"Correct: I know the answer.\\nKnow is a stative verb (Zustandsverb).\\nStative verbs cannot be used in progressive form.\\nOther stative verbs: believe, understand, love, hate, want, seem."},{"t":"Fill in: Past Progressive or Simple Past\\n\\nWhile I _____ (walk) home, I _____ (find) a wallet.","l":"While I was walking home, I found a wallet.\\nwas walking = Past Progressive (andauernde Handlung)\\nfound = Simple Past (plötzliches Ereignis darin)"},{"t":"Translate:\\n\\n1. Ich werde gerade essen, wenn du ankommst.\\n2. Sie hat das Buch noch nicht gelesen.","l":"1. I will be eating when you arrive. (Future Progressive)\\n2. She has not read the book yet. (Present Perfect + yet)"},{"t":"What tense is used in news headlines and why?","l":"News headlines often use Simple Present even for past events.\\n→ President signs new law. (instead of signed)\\n\\nReason: makes news feel immediate and current\\nAlso: infinitives without to\\n→ President to sign new law. (upcoming event)"},{"t":"Choose and explain:\\n\\nBy the time he _____ (arrive), we _____ (finish) dinner.","l":"By the time he arrives, we will have finished dinner.\\narrives = Simple Present (Zeitnebensatz mit by the time)\\nwill have finished = Future Perfect (abgeschlossen vor Ankunft)"}],"Grammatik":[{"t":"Complete the conditional sentences:\\n\\n1. If it _____ (rain), we _____ (stay) home. (Typ 1)\\n2. If I _____ (be) you, I _____ (not say) that. (Typ 2)\\n3. If she _____ (study) harder, she _____ (pass). (Typ 3)","l":"1. If it rains, we will stay home. (Typ 1 - realistisch)\\n2. If I were you, I would not say that. (Typ 2)\\n3. If she had studied harder, she would have passed. (Typ 3)"},{"t":"Rewrite in passive voice:\\n\\n1. The teacher explains the grammar.\\n2. Students completed the test yesterday.\\n3. Someone has stolen my bike.","l":"1. The grammar is explained by the teacher.\\n2. The test was completed by students yesterday.\\n3. My bike has been stolen."},{"t":"Join with a relative clause:\\n\\n1. That is the girl. She won the competition.\\n2. I visited the city. My grandmother was born there.","l":"1. That is the girl who won the competition.\\n2. I visited the city where my grandmother was born."},{"t":"Change from direct to reported speech:\\n\\n1. I am very tired, she said.\\n2. He asked: Will you help me?\\n3. Tom said: I cannot come tomorrow.","l":"1. She said (that) she was very tired.\\n2. He asked if I would help him.\\n3. Tom said (that) he could not come the next day."},{"t":"Fill in comparative or superlative:\\n\\n1. This test is _____ (difficult) than the last.\\n2. She is the _____ (good) student in class.\\n3. Today is the _____ (hot) day of the year.","l":"1. more difficult (3 Silben: more)\\n2. best (unregelm.: good-better-best)\\n3. hottest (kurz: hot-hotter-hottest, tt)"},{"t":"Explain Typ 0 conditional with 2 examples.","l":"Typ 0: Always true - general facts, scientific truths\\nStructure: If + Simple Present, Simple Present\\n\\nExamples:\\n- If you heat water to 100 degrees, it boils.\\n- If it rains, the streets get wet.\\n\\nNo hypothesis - just facts."},{"t":"Transform into passive (all tenses):\\n\\nThey build houses. (Present, Past, Future)","l":"Present: Houses are built.\\nPast: Houses were built.\\nFuture: Houses will be built.\\nPresent Perfect: Houses have been built."},{"t":"Fill in who, which, whose, where, when:\\n\\n1. The girl _____ bag was stolen cried.\\n2. I know the place _____ it happened.\\n3. This is the book _____ I told you about.","l":"1. whose (Besitz)\\n2. where (Ort)\\n3. which / that (Ding)"},{"t":"What is a defining relative clause? When do you NOT use a comma?","l":"A defining relative clause identifies WHICH person or thing we mean.\\nIt is essential - without it the sentence changes meaning.\\n→ The man who called me is my uncle.\\n\\nNo comma is used because the clause is defining.\\nContrast with non-defining:\\n→ My uncle, who called me, is nice. (extra info, comma needed)"},{"t":"Write 3 sentences using if-clauses (one of each type).","l":"Typ 1: If I study hard, I will pass the exam.\\nTyp 2: If I were a bird, I would fly away.\\nTyp 3: If I had known, I would have helped you."},{"t":"What are modal verbs? Name 6 and give one example each.","l":"1. can - I can swim.\\n2. could - She could help.\\n3. must - You must go.\\n4. should - He should study.\\n5. may - You may leave.\\n6. will - I will come.\\n(Also: would, might, shall, need)"},{"t":"Transform to reported speech:\\n\\nDon\'t forget your homework! the teacher said.","l":"The teacher told us not to forget our homework.\\n(Imperative in reported speech: told + to + infinitive)\\nNegative: told + not + to + infinitive"},{"t":"Fill in: much, many, a lot of, few, little\\n\\n1. I have _____ money. (little)\\n2. There are _____ students here. (many)\\n3. She drinks _____ coffee. (much - negative)","l":"1. I have little money. (uncountable)\\n2. There are many students here. (countable)\\n3. She does not drink much coffee. (uncountable, negative)"},{"t":"What is subject-verb agreement? Give 2 examples of common mistakes.","l":"Subject and verb must agree in number (singular/plural).\\n\\nCommon mistakes:\\n1. Everyone are here. → Everyone IS here. (everyone = singular)\\n2. The news are bad. → The news IS bad. (news = singular)\\n\\nTricky: neither...nor, either...or → verb agrees with closest subject."},{"t":"Transform the sentence:\\n\\nShe was too tired to continue. → She was so tired that...","l":"She was so tired that she could not continue.\\n\\ntoo + adjective + to-infinitive\\n= so + adjective + that + subject + cannot/could not + infinitive"},{"t":"Fill in the correct preposition:\\n\\n1. I am interested _____ science.\\n2. She is good _____ maths.\\n3. He is afraid _____ spiders.","l":"1. interested IN science\\n2. good AT maths\\n3. afraid OF spiders\\n(These are fixed collocations - must be memorized!)"},{"t":"Explain the difference between make and do.","l":"MAKE: to produce or create something\\n→ make a cake, make a decision, make a noise, make a mistake\\n\\nDO: to perform an activity\\n→ do homework, do sport, do a job, do the washing\\n\\nTip: No fixed rule - these must be learned as set phrases."},{"t":"Change the adjective order (correct it):\\n\\nShe wore a cotton beautiful long red dress.","l":"Correct: She wore a beautiful long red cotton dress.\\n\\nEnglish adjective order:\\nOpinion - Size - Age - Shape - Color - Origin - Material\\n→ beautiful (opinion) long (size) red (color) cotton (material)"},{"t":"What is the difference between say and tell?","l":"SAY: used without a personal object\\n→ She said (that) she was tired.\\n→ He said hello.\\n\\nTELL: requires a personal object (someone)\\n→ She told me (that) she was tired.\\n→ He told us the news."},{"t":"Identify the type of conditional and explain:\\n\\nIf I had more time, I would read more books.","l":"Type 2 Conditional (hypothetical/unlikely)\\nStructure: If + Simple Past → would + infinitive\\n\\nMeaning: This is an unreal/imaginary situation in the present.\\nThe speaker does NOT have enough time in reality.\\nCompare: If I have time (Typ 1 = realistic possibility)"}],"Writing":[{"t":"Write a topic sentence and 2 supporting sentences:\\n\\nTopic: Social media has advantages and disadvantages.","l":"Topic sentence: Social media can be both beneficial and harmful for teenagers.\\n\\nSupport 1: Platforms like Instagram allow people to stay connected and express creativity.\\n\\nSupport 2: However, constant comparison with others can damage self-esteem and lead to anxiety."},{"t":"Write a formal email opening:\\n\\nYou apply for a summer internship at a law firm.","l":"Dear Sir or Madam,\\n\\nI am writing to apply for the summer internship advertised on your website. I am a Year 10 student at [School Name] with a strong interest in law and I believe this opportunity would be highly valuable for my future career."},{"t":"Improve this sentence using a linking word:\\n\\nThe weather was bad. We went to the beach.","l":"Options:\\n- Although the weather was bad, we went to the beach.\\n- Despite the bad weather, we went to the beach.\\n- The weather was bad; however, we went to the beach.\\n\\nAll show contrast between the two statements."},{"t":"Write a conclusion paragraph for an essay about\\nthe advantages of learning a foreign language.","l":"In conclusion, learning a foreign language has numerous benefits. It improves cognitive abilities, opens up career opportunities, and enables communication across cultures. In my opinion, every student should be encouraged to study at least one foreign language throughout their school years."},{"t":"What should an introduction of an opinion essay contain?","l":"1. A hook - an interesting opening sentence\\n2. Background information on the topic\\n3. A clear thesis statement (your main opinion)\\n\\nDO NOT start with arguments in the introduction!\\n\\nExample opener: In today\'s increasingly connected world, social media plays a central role in many teenagers\' lives."},{"t":"Write the body paragraph structure (PEEL).","l":"P - Point: State your argument\\nE - Evidence: Give a fact, statistic, or example\\nE - Explanation: Explain how the evidence supports your point\\nL - Link: Connect back to the question/thesis\\n\\nExample:\\nP: Social media improves communication.\\nE: Studies show 90% of teens use it daily to stay in touch.\\nE: This shows it has become the primary communication tool.\\nL: Therefore, it clearly has social benefits."},{"t":"Correct the formal email:\\n\\nHey, I wanna ask about the job. Can u send info? Thanks, Jake","l":"Dear Sir or Madam,\\n\\nI am writing to enquire about the job vacancy at your company. I would be grateful if you could send me further information about the position.\\n\\nYours faithfully,\\nJakob Schmidt\\n\\nMistakes: informal greeting, abbreviations, missing structure"},{"t":"Write a counter-argument for this claim:\\n\\nSmartphones should be banned in schools.","l":"Counter-argument:\\nOn the other hand, smartphones can be valuable educational tools. Many schools already use apps and online platforms for learning. Rather than banning devices, schools should teach responsible use.\\n\\nCounter-argument should: acknowledge the other view + refute it."},{"t":"What is the difference between formal and informal language?\\nGive 3 examples of each.","l":"FORMAL:\\n- I am writing to enquire about...\\n- I would be grateful if...\\n- Yours faithfully / sincerely\\n\\nINFORMAL:\\n- Just wanted to ask...\\n- Could you...? (less formal)\\n- See you / Best / Cheers\\n\\nFormal: full words, polite, no contractions\\nInformal: contractions (I\'m, won\'t), casual vocabulary"},{"t":"Write an opinion essay introduction for the topic:\\n\\nShould students have homework?","l":"Homework has been part of school life for generations. While some believe it reinforces learning, others argue that it puts unnecessary pressure on students. In this essay, I will discuss both sides of the argument before sharing my own opinion."},{"t":"What are transition words and why are they important?","l":"Transition words connect ideas and guide the reader through a text.\\n\\nImportance:\\n- Show logical relationships (cause, contrast, addition)\\n- Make writing flow and easier to read\\n- Show academic writing ability\\n\\nCategories:\\nAddition: Furthermore, Moreover, In addition\\nContrast: However, Nevertheless, Although\\nConclusion: In conclusion, To sum up"},{"t":"Write a persuasive paragraph on:\\nAnimal testing should be banned.","l":"Animal testing is a cruel and outdated practice that must be abolished. Every year, millions of animals suffer in painful experiments, despite the existence of modern alternatives such as computer simulations and cell cultures. If we truly value ethical progress, we cannot justify causing suffering when better options are available. Therefore, animal testing should be banned immediately."},{"t":"What is a thesis statement? Write one for:\\nTechnology has changed education.","l":"A thesis statement is one sentence that states the main argument of an essay.\\nIt is usually at the end of the introduction.\\n\\nExample:\\nAlthough technology has transformed education in many positive ways, its overuse poses serious risks to students\' concentration and social development."},{"t":"How do you start a sentence in a formal essay?\\nName 5 formal sentence starters.","l":"1. It is widely believed that...\\n2. There is no doubt that...\\n3. One could argue that...\\n4. Research suggests that...\\n5. It is important to consider...\\n\\nAvoid starting with: I think, I believe at the beginning of each sentence (use sparingly)."},{"t":"Write a short email to a teacher asking for help\\nbefore an exam.","l":"Dear Ms./Mr. [Name],\\n\\nI am writing to ask whether it would be possible to arrange a short meeting before the upcoming exam. I have been revising the material, but I am struggling with some aspects of the topic and would greatly appreciate your guidance.\\n\\nThank you for your time.\\n\\nYours sincerely,\\n[Your Name]"},{"t":"Explain the difference between because, so and although.","l":"BECAUSE: gives a reason (cause)\\n→ She stayed home because she was ill.\\n\\nSO: gives a result (consequence)\\n→ She was ill, so she stayed home.\\n\\nALTHOUGH: shows a contrast/unexpected result\\n→ Although she was ill, she went to school."},{"t":"Write a discussion text introduction:\\n\\nIs it better to live in the city or the countryside?","l":"The question of whether city or rural life is preferable has been debated for many years. Supporters of urban living point to career opportunities and convenience, while those who prefer the countryside value peace and nature. This essay will examine both perspectives."},{"t":"Correct the mistakes in this essay conclusion:\\n\\nIn the end I think that social media is good and bad. It has pros and cons. That\'s all I have to say.","l":"Improved version:\\nIn conclusion, social media presents both significant benefits and serious drawbacks. While it fosters communication and creativity, it also poses risks to mental health and privacy. A balanced approach - with responsible use and digital literacy - is therefore essential.\\n\\nMistakes: too short, too informal, no real argument"},{"t":"What makes a good essay paragraph?\\nList 4 key features.","l":"1. A clear topic sentence that states the main point\\n2. Evidence or examples to support the point\\n3. Explanation of how the evidence relates to the argument\\n4. A linking sentence that connects to the next paragraph or thesis\\n\\nBonus: appropriate use of transition words"},{"t":"Write a letter of complaint about a faulty product.","l":"Dear Sir or Madam,\\n\\nI am writing to express my dissatisfaction with a product I recently purchased from your company. The item (ref. number: 12345) arrived damaged and does not function as described.\\n\\nI would be grateful if you could arrange a replacement or full refund at your earliest convenience.\\n\\nI look forward to your prompt response.\\n\\nYours faithfully,\\n[Name]"}]}';
-
 var AUFGABEN;
 try {
   var mBase = JSON.parse(AUFGABEN_JSON);
@@ -877,16 +1233,48 @@ function clearVok() {
 // KI-TUTOR mit Gemini
 var chatHistory = [];
 
+function formatText(text) {
+  // Sternchen-Formatierung zu richtigem HTML umwandeln
+  var html = text
+    // Fettdruck **text** oder __text__
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.*?)__/g, '<strong>$1</strong>')
+    // Kursiv *text* oder _text_
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Code `text`
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    // Zeilenumbrüche zu <br>
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+  return '<p>' + html + '</p>';
+}
+
 function addMsg(text, type) {
   var a = document.getElementById('chatarea');
   var id = 'm' + Date.now() + Math.random();
   var d = document.createElement('div');
   d.className = 'msg ' + type;
   d.id = id;
-  d.textContent = text;
+  if (type === 'ai') {
+    d.innerHTML = formatText(text);
+  } else {
+    d.textContent = text;
+  }
   a.appendChild(d);
   a.scrollTop = a.scrollHeight;
   return id;
+}
+
+function updateMsg(id, text) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = formatText(text);
+  // MathJax neu rendern falls vorhanden
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([el]);
+  }
+  var a = document.getElementById('chatarea');
+  if (a) a.scrollTop = a.scrollHeight;
 }
 
 async function send() {
@@ -909,9 +1297,9 @@ async function send() {
     var reply = d.text || 'Fehler beim Laden.';
     chatHistory.push({ role: 'user', text: '[' + fach + '] ' + text });
     chatHistory.push({ role: 'model', text: reply });
-    document.getElementById(lid).textContent = reply;
+    updateMsg(lid, reply);
   } catch (e) {
-    document.getElementById(lid).textContent = 'Verbindungsfehler! Ist api/chat.js auf GitHub?';
+    updateMsg(lid, 'Verbindungsfehler! Bitte nochmal versuchen.');
   }
   btn.disabled = false;
 }
@@ -939,5 +1327,7 @@ document.addEventListener('DOMContentLoaded', function() {
   onThemaChange();
 });
 </script>
+</div><!-- end app -->
 </body>
 </html>
+
