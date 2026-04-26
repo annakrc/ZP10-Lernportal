@@ -276,6 +276,33 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .page-title{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:1.1rem;display:flex;align-items:center;gap:8px;color:var(--text)}
 .accent-bar{width:4px;height:1rem;border-radius:2px;flex-shrink:0}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+@media(max-width:768px){
+.content{padding-bottom:80px}
+.topnav{padding:0 1rem}
+.nav-links{display:none}
+.app{flex-direction:column}
+.sidebar{display:none!important}
+.content{padding:1rem;max-width:100%}
+.hero{padding:1.3rem;border-radius:12px}
+.hero-title{font-size:1.4rem}
+.fach-grid{grid-template-columns:1fr;gap:10px}
+.tools-row{grid-template-columns:1fr;gap:8px}
+.fach-subtopic-grid{grid-template-columns:1fr;gap:8px}
+.formula-grid{grid-template-columns:1fr}
+.plan-stats{grid-template-columns:repeat(3,1fr)}
+.vok-grid{grid-template-columns:1fr}
+.chat-area{height:280px}
+.msg{max-width:95%}
+.chat-input-row{flex-wrap:wrap;gap:6px}
+.fsel{width:100%}
+.cinp{flex:1;min-width:0}
+.ueb-controls{flex-wrap:wrap}
+.plan-row{flex-direction:column}
+.ki-hero{flex-direction:column;gap:10px}
+.fach-card{padding:1rem}
+.mobile-nav{display:flex!important}
+}
 </style>
 </head>
 <body>
@@ -1316,6 +1343,41 @@ function esc(s) {
     .replace(/>/g, '&gt;');
 }
 
+// MOBILE MENU
+function showMobileMenu() {
+  var existing = document.getElementById("mobile-menu-overlay");
+  if(existing) { existing.remove(); return; }
+  var overlay = document.createElement("div");
+  overlay.id = "mobile-menu-overlay";
+  overlay.style.cssText = "position:fixed;bottom:70px;left:0;right:0;background:white;border-top:1px solid rgba(0,0,0,0.1);z-index:199;padding:1rem;border-radius:16px 16px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,0.1)";
+  overlay.innerHTML = `
+    <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Fächer</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">
+      <button onclick="sideNav('mathe','sb-m','m');closeMobileMenu()" style="background:#fef2f2;border:none;border-radius:10px;padding:12px 8px;cursor:pointer;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:var(--mathe)">📐 Mathe</button>
+      <button onclick="sideNav('deutsch','sb-d','d');closeMobileMenu()" style="background:#f5f3ff;border:none;border-radius:10px;padding:12px 8px;cursor:pointer;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:var(--deutsch)">📖 Deutsch</button>
+      <button onclick="sideNav('englisch','sb-e','e');closeMobileMenu()" style="background:#f0fdf4;border:none;border-radius:10px;padding:12px 8px;cursor:pointer;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:var(--englisch)">🌍 Englisch</button>
+    </div>
+    <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Tools</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+      <button onclick="sideNav('lernzettel','sb-lz','g');closeMobileMenu()" style="background:#fffbeb;border:none;border-radius:10px;padding:10px;cursor:pointer;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#92400e">📂 Lernzettel</button>
+      <button onclick="sideNav('e-vokabeln','sb-vok','g');closeMobileMenu()" style="background:#fdf2f8;border:none;border-radius:10px;padding:10px;cursor:pointer;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#9d174d">🃏 Vokabeln</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  setTimeout(function(){ document.addEventListener("click", closeMobileMenuOutside); }, 100);
+}
+
+function closeMobileMenu() {
+  var el = document.getElementById("mobile-menu-overlay");
+  if(el) el.remove();
+  document.removeEventListener("click", closeMobileMenuOutside);
+}
+
+function closeMobileMenuOutside(e) {
+  var el = document.getElementById("mobile-menu-overlay");
+  if(el && !el.contains(e.target)) closeMobileMenu();
+}
+
 // INIT
 document.addEventListener('DOMContentLoaded', function() {
   renderLZ();
@@ -1328,6 +1390,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </div><!-- end app -->
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="mobile-nav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);padding:8px 0 12px;z-index:200;justify-content:space-around;align-items:center">
+  <button onclick="showPage('home');setNavActive('nl-home')" style="background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-family:Inter,sans-serif;color:var(--muted);font-size:10px;font-weight:500;padding:4px 12px"><span style="font-size:1.3rem">🏠</span>Start</button>
+  <button onclick="sideNav('ki-tutor','sb-ki','g')" style="background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-family:Inter,sans-serif;color:var(--muted);font-size:10px;font-weight:500;padding:4px 12px"><span style="font-size:1.3rem">🤖</span>KI-Tutor</button>
+  <button onclick="sideNav('uebungen','sb-ue','g')" style="background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-family:Inter,sans-serif;color:var(--muted);font-size:10px;font-weight:500;padding:4px 12px"><span style="font-size:1.3rem">✏️</span>Übungen</button>
+  <button onclick="sideNav('lernplan','sb-pl','g')" style="background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-family:Inter,sans-serif;color:var(--muted);font-size:10px;font-weight:500;padding:4px 12px"><span style="font-size:1.3rem">📅</span>Lernplan</button>
+  <button onclick="showMobileMenu()" style="background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-family:Inter,sans-serif;color:var(--muted);font-size:10px;font-weight:500;padding:4px 12px"><span style="font-size:1.3rem">☰</span>Mehr</button>
+</div>
 </body>
 </html>
 
